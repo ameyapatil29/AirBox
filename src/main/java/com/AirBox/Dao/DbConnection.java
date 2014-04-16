@@ -72,14 +72,14 @@ public void insertFiledata(UploadObject file){
         e.printStackTrace();
     }
 }
-/*
-public void deleteFile(File file){
+
+public void deleteFile(UploadObject file){
 	String query;
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "");
         Statement stmt = (Statement) con.createStatement();
-        query = "delete from file_details";
+        query = "delete from file_details WHERE username='" + file.getUsername() + "' AND filename='" + file.getFileName() + "'";
         stmt.executeUpdate(query);
     } catch (InstantiationException e) {
         e.printStackTrace();
@@ -91,6 +91,6 @@ public void deleteFile(File file){
         e.printStackTrace();
     }
 }
-*/
+
 }
 
