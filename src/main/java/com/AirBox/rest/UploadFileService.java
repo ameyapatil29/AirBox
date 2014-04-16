@@ -27,8 +27,8 @@ public class UploadFileService {
 			 @FormDataParam("file") File fileobject,
 			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
 
-		AwsS3BucketHandling awsS3BucketHandling=new AwsS3BucketHandling();
-		String output=awsS3BucketHandling.addS3BucketObjects(fileobject,contentDispositionHeader.getFileName());
+		AWSFacade awsFacade=new AWSFacade();
+		String output=awsFacade.addS3BucketObjects(fileobject,contentDispositionHeader.getFileName());
 		
 		return Response.status(200).entity(output).build();
 
@@ -39,9 +39,9 @@ public class UploadFileService {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response deleteObject(
     		@PathParam("objectkey") String key){
-    	AwsS3BucketHandling awsS3BucketHandling=new AwsS3BucketHandling();
+    	AWSFacade awsFacade=new AWSFacade();
     	System.out.println("key::::::: "+key);
-    	String output=awsS3BucketHandling.deleteS3BucketObjects(key);
+    	String output=awsFacade.deleteS3BucketObjects(key);
     	return Response.status(200).entity(output).build();
     }  
 
