@@ -16,6 +16,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.AirBox.Domain.UploadObject;
+import com.AirBox.Domain.User;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
@@ -33,7 +35,16 @@ public class UploadFileService {
 
 		AWSFacade awsFacade=new AWSFacade();
 		String output=awsFacade.addS3BucketObjects(fileobject,contentDispositionHeader.getFileName());
+		UploadObject uploadobject = new UploadObject();
+		uploadobject.setFileName(contentDispositionHeader.getFileName());
+		uploadobject.setSize(contentDispositionHeader.getSize());
+		//uploadobject.setUsername(username); remaining part of taking username dynamically from the session
+		uploadobject.setDateCreated(contentDispositionHeader.getCreationDate());
 		
+		System.out.println("upload object size is "+ uploadobject.getSize());
+		System.out.println("uploaded object date created is "+uploadobject.getDateCreated());
+		
+	
 		return Response.status(200).entity(output).build();
 
 	}

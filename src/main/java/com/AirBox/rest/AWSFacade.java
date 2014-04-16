@@ -10,7 +10,6 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
-//import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
@@ -34,8 +33,8 @@ public class AWSFacade {
 		AWSCredentials myCredentials = new BasicAWSCredentials(
 				MyConfig.getMyAccessId(), MyConfig.getMySecretId());
 		AmazonS3 s3 = new AmazonS3Client(myCredentials);        
-		Region usWest2 = Region.getRegion(Regions.US_WEST_1);
-		s3.setRegion(usWest2);
+		Region usWest1 = Region.getRegion(Regions.US_WEST_1);
+		s3.setRegion(usWest1);
 		String bucketName = MyConfig.getMyBucketName();
 
 		System.out.println("===========================================");
@@ -43,8 +42,6 @@ public class AWSFacade {
 		System.out.println("===========================================\n");
 
 		try {
-			System.out.println("Listing buckets");
-
 			System.out.println("Uploading a new object to S3...");
 			System.out.println("Name of the uploading object is: "+filetoupload);
 			s3.putObject(new PutObjectRequest(bucketName, filetoupload, fileobject));
@@ -74,8 +71,8 @@ public class AWSFacade {
 		AWSCredentials myCredentials = new BasicAWSCredentials(
 				MyConfig.getMyAccessId(), MyConfig.getMySecretId());
 		AmazonS3 s3 = new AmazonS3Client(myCredentials);        
-		Region usWest2 = Region.getRegion(Regions.US_WEST_1);
-		s3.setRegion(usWest2);
+		Region usWest1 = Region.getRegion(Regions.US_WEST_1);
+		s3.setRegion(usWest1);
 		String bucketName = MyConfig.getMyBucketName();
 		System.out.println("\nDownloading all objects...");
 
@@ -122,14 +119,14 @@ public class AWSFacade {
 		AWSCredentials myCredentials = new BasicAWSCredentials(
 				MyConfig.getMyAccessId(), MyConfig.getMySecretId());
 		AmazonS3 s3 = new AmazonS3Client(myCredentials);        
-		Region usWest2 = Region.getRegion(Regions.US_WEST_1);
-		s3.setRegion(usWest2);
+		Region usWest1 = Region.getRegion(Regions.US_WEST_1);
+		s3.setRegion(usWest1);
 		String bucketName = MyConfig.getMyBucketName();
-		System.out.println("\nDownloading one object...");
+		System.out.println("Downloading object...");
 
 		System.out.println("===========================================");
-		System.out.println("Getting Started with Amazon S3");
-		System.out.println("===========================================\n");
+		System.out.println("  Getting Started with Amazon S3 Download   ");
+		System.out.println("===========================================");
 		GetObjectRequest objRequest=null;
 		try{
 				objRequest=new GetObjectRequest(bucketName, key);
@@ -162,9 +159,9 @@ public class AWSFacade {
 		public String addFolderS3BucketObjects(File directory,String key){
 		String response="fail";
 		AmazonS3 s3 = new AmazonS3Client(new ClasspathPropertiesFileCredentialsProvider());
-		Region usWest2 = Region.getRegion(Regions.US_WEST_1);
-		s3.setRegion(usWest2);
-		String bucketName = "shareboxbucket";
+		Region usWest1 = Region.getRegion(Regions.US_WEST_1);
+		s3.setRegion(usWest1);
+		String bucketName = MyConfig.getMyBucketName();
 
 		System.out.println("===========================================");
 		System.out.println("Getting Started with Amazon S3");
