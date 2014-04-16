@@ -147,4 +147,21 @@ public class UploadFileService {
 
 	}
 
+	@POST
+	@Path("/login")
+	public Response userLogin(@FormParam("email") String email, 
+			@FormParam("password") String password ) {
+			String output = "";
+			System.out.println("Username is: "+email);
+			DbConnection dbcon = new DbConnection();
+			if(dbcon.loginCheck(email, password))
+			{
+			output = "Login Successful for "+ email;
+				
+			System.out.println("User Validated");
+			
+			}
+			return Response.status(200).entity(output).build();
+
+	}
 }
