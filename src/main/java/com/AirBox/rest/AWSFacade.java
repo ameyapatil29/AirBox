@@ -117,6 +117,48 @@ public class AWSFacade {
 	}
 	
 	
+	public String downloadS3BucketObject(String localStoragePath, String key){
+		String response="fail";
+		AWSCredentials myCredentials = new BasicAWSCredentials(
+				MyConfig.getMyAccessId(), MyConfig.getMySecretId());
+		AmazonS3 s3 = new AmazonS3Client(myCredentials);        
+		Region usWest2 = Region.getRegion(Regions.US_WEST_1);
+		s3.setRegion(usWest2);
+		String bucketName = MyConfig.getMyBucketName();
+		System.out.println("\nDownloading one object...");
+
+		System.out.println("===========================================");
+		System.out.println("Getting Started with Amazon S3");
+		System.out.println("===========================================\n");
+		GetObjectRequest objRequest=null;
+		try{
+				objRequest=new GetObjectRequest(bucketName, key);
+				File file=new File(localStoragePath+key);
+				s3.getObject(objRequest,file);
+				s3.getObject(objRequest);
+				System.out.println("Object "+ key +" downloaded to "+file.getPath());
+				System.out.println("-----------------------------------------------------------------");
+
+			
+			response="success";
+
+		} catch (AmazonServiceException ase) {
+			System.out.println("Caught an AmazonServiceException, which means your request made it "
+					+ "to Amazon S3, but was rejected with an error response for some reason.");
+			System.out.println("Error Message:    " + ase.getMessage());
+			System.out.println("HTTP Status Code: " + ase.getStatusCode());
+			System.out.println("AWS Error Code:   " + ase.getErrorCode());
+			System.out.println("Error Type:       " + ase.getErrorType());
+			System.out.println("Request ID:       " + ase.getRequestId());
+		} catch (AmazonClientException ace) {
+			System.out.println("Caught an AmazonClientException, which means the client encountered "
+					+ "a serious internal problem while trying to communicate with S3, "
+					+ "such as not being able to access the network.");
+			System.out.println("Error Message: " + ace.getMessage());
+		}
+		return response;
+	}
+	
 		public String addFolderS3BucketObjects(File directory,String key){
 		String response="fail";
 		AmazonS3 s3 = new AmazonS3Client(new ClasspathPropertiesFileCredentialsProvider());

@@ -47,6 +47,18 @@ public class UploadFileService {
     	return Response.status(200).entity(output).build();
     }  
 	
+	@GET
+    @Path("/download/{objectKey}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response downloadOneObject(@PathParam("objectKey") String key){
+    	
+    	String output="Files downloaded at location: C:/Users/Rohit/Desktop/AirBoxRepo/";
+    	String downloadLocation = "C:/Users/Rohit/Desktop/AirBoxRepo/";
+    	AWSFacade awsFacade=new AWSFacade();
+    	output=awsFacade.downloadS3BucketObject(downloadLocation, key);
+    	return Response.status(200).entity(output).build();
+    }  
+	
 	@DELETE
     @Path("/delete/{objectkey}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
