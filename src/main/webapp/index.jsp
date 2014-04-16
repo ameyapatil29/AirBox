@@ -1,7 +1,7 @@
 
 <html>
 <body>
-	<h1>File Upload with Jersey</h1>
+	<h1>Upload File</h1>
  
 	<form action="rest/file/upload" method="post" enctype="multipart/form-data">
  
