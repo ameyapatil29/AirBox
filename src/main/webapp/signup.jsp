@@ -3,13 +3,42 @@
 <head>
     <meta charset="utf-8">
     <title>Login &amp; Airbox</title>
+    
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link href="C:\Users\Bhagyashree\Desktop\bootstrap\css\bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <style type="text/css">
         </style>
 
 
+<script type="text/javascript">
 
+function uploadFormData(){
+	 alert('inside uploadform');
+	   var fname = $('#login-firstname').val();
+	   var lname = $('#login-lastname').val();
+	   var email = $('#login-email').val();
+	   var password = $('#password').val();
+	 
+	 alert('name'+fname);
+	   
+		$.ajax({
+			url : "rest/file/signup",
+		    type: "POST",
+		    data : "fname=" + fname + "&lname=" + lname + "&email=" + email + "&password=" + password,
+		   
+		    success:function(data, textStatus, jqXHR){
+		    	alert('success');
+		    	window.location.href="index.jsp";
+		    },
+		    error: function(jqXHR, textStatus, errorThrown){
+		    	alert('Could not process request.. ' + errorThrown);
+		    }
+		});
+}
+
+
+</script>
 </head>
 <body>
 	    <div class="container"> </div>
@@ -59,14 +88,16 @@
                                     
 
                                     <!-- Button -->
-
+<!-- 
                                     <div class="col-sm-12 controls">
-                                      <a id="btn-login" href="#" class="btn btn-info">Register </a>
+                                      <a id="signup"  class="btn btn-info">Register </a>
+
+                                       
                                      
                                     </div>
-                                
+                                                                       -->
 
-
+ <button id="signup" value="Register" onclick="uploadFormData()" ></button> 
                               
 
 

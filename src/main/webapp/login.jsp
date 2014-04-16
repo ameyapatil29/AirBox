@@ -5,11 +5,13 @@
     <meta charset="utf-8">
     <title>Login &amp; airbox</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="C:\Users\Bhagyashree\Desktop\bootstrap\css\bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <style type="text/css">
-        </style>
-
-
+  <link href="resources/CSS/bootstrap/bootstrap.min.css" rel="stylesheet"
+	media="screen" type="text/css">
+<link href="resources/CSS/bootstrap/bootstrap.css" rel="stylesheet" media="screen" type="text/css">
+<link href="resources/CSS/bootstrap/bootstrap-responsive.css" rel="stylesheet"
+	media="screen" type="text/css">
+<link href="resources/CSS/bootstrap/bootstrap-responsive.min.css" rel="stylesheet"
+	media="screen" type="text/css">
 
 </head>
 <body>
