@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Login &amp; Signup forms in panel - Bootsnipp.com</title>
+    <title>Login &amp; airbox</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="C:\Users\Bhagyashree\Desktop\bootstrap\css\bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <style type="text/css">
@@ -13,13 +13,13 @@
 
 </head>
 <body>
-	    <div class="container"> 
- <div class="well">       
+	    <div class="container"> </div>
+ <div class="well">       </div>
         <div id="loginbox" style="margin-top:160px">
 	<div style= "margin-bottom:100px">                    
             <div class="panel panel-info" >
                     <div class="panel-heading">
-			<div class="panel-title">Drop here</div>
+			<div class="panel-title">Airbox</div>
                         <div class="panel-title">Sign In</div>
                         <div style="float:middle; font-size: 100%; position: relative; top:180px"><a href="#">Forgot password?</a></div>
                     </div>     
@@ -28,7 +28,7 @@
 
                         <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
                             
-                        <form id="loginform" class="form-horizontal" role="form">
+                        <form id="loginform" class="form-horizontal" ></form>
                                     
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -65,13 +65,13 @@
                                     <div class="col-md-12 control">
                                          <div style="border-top: 5px solid#888; padding-top:15px; font-size:85%" >
                                             Don't have an account!  
-                                        <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
+                                        <a href="signup.jsp">
                                             Sign Up Here
                                         </a>
                                         </div>
                                     </div>
                                 </div>    
-                            </form>     
+                                
 
 
 
