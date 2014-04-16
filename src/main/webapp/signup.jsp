@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Login &amp; Signup forms in panel - Bootsnipp.com</title>
+    <title>Login &amp; Airbox</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="C:\Users\Bhagyashree\Desktop\bootstrap\css\bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <style type="text/css">
@@ -18,7 +18,7 @@
 	<div style= "margin-bottom:100px">       </div>           
             <div class="panel panel-info" > </div>
                     <div class="panel-heading">
-			<div class="panel-title">Drop here</div>
+			<div class="panel-title">Airbox</div>
                         <div class="panel-title">Sign Up</div>
                         
                     </div>     
@@ -64,16 +64,14 @@
                                       <a id="btn-login" href="#" class="btn btn-info">Register </a>
                                      
                                     </div>
-                                </div>
+                                
 
 
-                            </form>     
+                              
 
 
 
-                        </div>                     
-                    </div>  
-        </div>
+         
         <script src="C:\Users\Bhagyashree\Desktop\bootstrap\css\bootstrap.css"></script>
     <script>
         function PassVerify(){
