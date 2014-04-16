@@ -8,6 +8,7 @@ import java.io.OutputStream;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -33,6 +34,18 @@ public class UploadFileService {
 		return Response.status(200).entity(output).build();
 
 	}
+	
+	@GET
+    @Path("/download")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response downloadObjects(){
+    	
+    	String output="Files downloaded at location: C:/Users/Rohit/Desktop/AirBoxRepo/";
+    	String downloadLocation = "C:/Users/Rohit/Desktop/AirBoxRepo/";
+    	AWSFacade awsFacade=new AWSFacade();
+    	output=awsFacade.downloadAllS3BucketObjects(downloadLocation);
+    	return Response.status(200).entity(output).build();
+    }  
 	
 	@DELETE
     @Path("/delete/{objectkey}")

@@ -1,6 +1,10 @@
 package com.AirBox.rest;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
@@ -18,6 +22,7 @@ import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.RestoreObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.transfer.TransferManager;
 
@@ -63,6 +68,54 @@ public class AWSFacade {
 		return response;
 	}
 
+	
+	public String downloadAllS3BucketObjects(String localStoragePath){
+		String response="fail";
+		AWSCredentials myCredentials = new BasicAWSCredentials(
+				MyConfig.getMyAccessId(), MyConfig.getMySecretId());
+		AmazonS3 s3 = new AmazonS3Client(myCredentials);        
+		Region usWest2 = Region.getRegion(Regions.US_WEST_1);
+		s3.setRegion(usWest2);
+		String bucketName = MyConfig.getMyBucketName();
+		System.out.println("\nDownloading all objects...");
+
+		System.out.println("===========================================");
+		System.out.println("Getting Started with Amazon S3");
+		System.out.println("===========================================\n");
+		GetObjectRequest objRequest=null;
+		try{
+			ObjectListing objectListing = s3.listObjects(new ListObjectsRequest()
+			.withBucketName(bucketName));
+			for (S3ObjectSummary objectSummary : objectListing.getObjectSummaries()) {
+				System.out.println(objectSummary.getKey() + " file of size " + objectSummary.getSize() + " downloaded.");
+				
+				objRequest=new GetObjectRequest(bucketName, objectSummary.getKey());
+				File file=new File(localStoragePath+objectSummary.getKey());
+				s3.getObject(objRequest,file);
+				s3.getObject(objRequest);
+				System.out.println("Object "+ objectSummary.getKey() +" downloaded to "+file.getPath());
+				System.out.println("-----------------------------------------------------------------");
+
+			}
+			response="success";
+
+		} catch (AmazonServiceException ase) {
+			System.out.println("Caught an AmazonServiceException, which means your request made it "
+					+ "to Amazon S3, but was rejected with an error response for some reason.");
+			System.out.println("Error Message:    " + ase.getMessage());
+			System.out.println("HTTP Status Code: " + ase.getStatusCode());
+			System.out.println("AWS Error Code:   " + ase.getErrorCode());
+			System.out.println("Error Type:       " + ase.getErrorType());
+			System.out.println("Request ID:       " + ase.getRequestId());
+		} catch (AmazonClientException ace) {
+			System.out.println("Caught an AmazonClientException, which means the client encountered "
+					+ "a serious internal problem while trying to communicate with S3, "
+					+ "such as not being able to access the network.");
+			System.out.println("Error Message: " + ace.getMessage());
+		}
+		return response;
+	}
+	
 	
 		public String addFolderS3BucketObjects(File directory,String key){
 		String response="fail";
@@ -164,6 +217,18 @@ public class AWSFacade {
 			}
 			return response;
 		}
+		
+		
+		 private static void displayTextInputStream(InputStream input) throws IOException {
+		        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+		        while (true) {
+		            String line = reader.readLine();
+		            if (line == null) break;
+
+		            System.out.println("    " + line);
+		        }
+		        System.out.println();
+		    }
 
 
 }
