@@ -1,5 +1,7 @@
-package com.AirBox.rest;
+package com.AirBox.Dao;
 
+import com.AirBox.Domain.UploadObject;
+import com.AirBox.Domain.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -40,6 +42,7 @@ public void insertUser(User user){
         Statement stmt = (Statement) con.createStatement();
         query = "INSERT into user_details (first_name, last_name, username, password) values ('"+user.getFirstName()+"','"+user.getLastName()+"','"+user.getUserName()+"','"+user.getPassword()+"')";
         stmt.executeUpdate(query);
+        System.out.println("User Inserted successfully");
     } catch (InstantiationException e) {
         e.printStackTrace();
     } catch (IllegalAccessException e) {
@@ -51,7 +54,7 @@ public void insertUser(User user){
     }
 }
 
-public void insertFiledata(File file){
+public void insertFiledata(UploadObject file){
     String query;
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();

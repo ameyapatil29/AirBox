@@ -16,6 +16,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.AirBox.Dao.DbConnection;
 import com.AirBox.Domain.UploadObject;
 import com.AirBox.Domain.User;
 import com.sun.jersey.core.header.FormDataContentDisposition;
@@ -102,7 +103,9 @@ public class UploadFileService {
 			user.setPassword(password);
 			System.out.println("surname of the user is"+user.getLastName());
 			String output = "Thankyou for regestring with us you will recieve email shortly "+ user.getFirstName();
-		
+			DbConnection dbcon = new DbConnection();
+			dbcon.insertUser(user);
+			System.out.println("User added");
 		return Response.status(200).entity(output).build();
 
 	}
