@@ -99,8 +99,10 @@ public class AwsS3BucketHandling {
 		
 		
 		public String deleteS3BucketObjects(String key){
-			
-			AmazonS3 s3 = new AmazonS3Client(new ClasspathPropertiesFileCredentialsProvider());
+			AWSCredentials myCredentials = new BasicAWSCredentials(
+					MyConfig.getMyAccessId(), MyConfig.getMySecretId());
+			AmazonS3 s3 = new AmazonS3Client(myCredentials); 
+			//AmazonS3 s3 = new AmazonS3Client(new ClasspathPropertiesFileCredentialsProvider());
 			Region usWest1 = Region.getRegion(Regions.US_WEST_1);
 			s3.setRegion(usWest1);
 			String bucketName = "cmpe273";
