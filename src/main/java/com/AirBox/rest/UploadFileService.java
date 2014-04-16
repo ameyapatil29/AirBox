@@ -1,5 +1,9 @@
 package com.AirBox.rest;
 
+import com.AirBox.SES.AmazonSESSample;
+import com.AirBox.SES.ConcreteMessage;
+import com.AirBox.SES.ConcreteUserInfo;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,11 +26,18 @@ import com.AirBox.Domain.User;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
+
+
 @Path("/file")
 public class UploadFileService {
+	
+	public ConcreteMessage cm;
+	public ConcreteUserInfo ui;
+	public AmazonSESSample as;
 /*
  * Rest API for handling between AWS and files  
  */
+	
 	@POST
 	@Path("/upload")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -36,6 +47,21 @@ public class UploadFileService {
 
 		AWSFacade awsFacade=new AWSFacade();
 		String output=awsFacade.addS3BucketObjects(fileobject,contentDispositionHeader.getFileName());
+		//If File Uploaded successfully then send EMail to user about the upload
+		
+		if(output.equalsIgnoreCase("success")){
+			
+			String msgBody ="Hello AirBox User,/nYour file was uploaded successfully to AWS S3 bucket./n/nThank you for using Airbox service.";
+			String msgHeader = "AWS S3 file upload success";
+			
+			ui = new ConcreteUserInfo("chetan.burande7@gmail.com");
+			cm = new ConcreteMessage(msgBody, msgHeader);
+			/*ui.setReEmail("chetan.burande7@gmail.com");
+			cm.setMsgBody(msgBody);
+			cm.setMsgSubject(msgHeader);*/
+			as.setConnec(ui, cm);
+		}
+		
 		UploadObject uploadobject = new UploadObject();
 		uploadobject.setFileName(contentDispositionHeader.getFileName());
 		uploadobject.setSize(contentDispositionHeader.getSize());
@@ -101,11 +127,22 @@ public class UploadFileService {
 			user.setLastName(lname);
 			user.setUserName(email);
 			user.setPassword(password);
+			//AWSFacade fact= new AWSFacade(user);
 			System.out.println("surname of the user is"+user.getLastName());
-			String output = "Thankyou for regestring with us you will recieve email shortly "+ user.getFirstName();
+			String output = "Thankyou for registring with us you will recieve email shortly "+ user.getFirstName();
 			DbConnection dbcon = new DbConnection();
 			dbcon.insertUser(user);
 			System.out.println("User added");
+			String msgBody ="Hello"+fname+"/n/n/nThank you for registering with AirBox./nWe hope to deliver our services in a manner that you find helpful/n/n/nThank You./nThe AirBox Team.";
+			String msgHeader = "Registration Confirmation";
+			
+			ui = new ConcreteUserInfo(email);
+			
+			cm = new ConcreteMessage(msgBody, msgHeader);
+			//ui.setReEmail(email);
+			//cm.setMsgBody(msgBody);
+			//cm.setMsgSubject(msgHeader);
+			as.setConnec(ui, cm);
 		return Response.status(200).entity(output).build();
 
 	}
