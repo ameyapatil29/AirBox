@@ -51,11 +51,12 @@ public class UploadFileService {
 		
 		if(output.equalsIgnoreCase("success")){
 			
-			String msgBody ="Hello AirBox User,/nYour file was uploaded successfully to AWS S3 bucket./n/nThank you for using Airbox service.";
+			String msgBody ="File upload successful";
 			String msgHeader = "AWS S3 file upload success";
 			
 			ui = new ConcreteUserInfo("chetan.burande7@gmail.com");
 			cm = new ConcreteMessage(msgBody, msgHeader);
+			as = new AmazonSESSample();
 			/*ui.setReEmail("chetan.burande7@gmail.com");
 			cm.setMsgBody(msgBody);
 			cm.setMsgSubject(msgHeader);*/
@@ -133,11 +134,11 @@ public class UploadFileService {
 			DbConnection dbcon = new DbConnection();
 			dbcon.insertUser(user);
 			System.out.println("User added");
-			String msgBody ="Hello"+fname+"/n/n/nThank you for registering with AirBox./nWe hope to deliver our services in a manner that you find helpful/n/n/nThank You./nThe AirBox Team.";
+			String msgBody ="Your account was created on AirBox.";
 			String msgHeader = "Registration Confirmation";
 			
 			ui = new ConcreteUserInfo(email);
-			
+			as = new AmazonSESSample();
 			cm = new ConcreteMessage(msgBody, msgHeader);
 			//ui.setReEmail(email);
 			//cm.setMsgBody(msgBody);

@@ -11,7 +11,7 @@ import com.amazonaws.regions.*;
 
 public class AmazonSESSample {
  
-    String FROM = "ameypatil.be@gmail.com";  // Replace with your "From" address. This address must be verified.
+    String FROM = "rohietkothari@gmail.com";  // Replace with your "From" address. This address must be verified.
     String TO = null; // Replace with a "To" address. If you have not yet requested
                                                       // production access, this address must be verified.
     String BODY = null;
