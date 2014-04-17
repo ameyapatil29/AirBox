@@ -16,7 +16,7 @@ public boolean loginCheck(String username, String password){
 
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "password");
         Statement stmt = (Statement) con.createStatement();
         query = "SELECT username, password FROM user_details WHERE username='" + username + "' AND password='" + password + "';";
         stmt.executeQuery(query);
@@ -38,7 +38,7 @@ public void insertUser(User user){
     String query;
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "password");
         Statement stmt = (Statement) con.createStatement();
         query = "INSERT into user_details (first_name, last_name, username, password) values ('"+user.getFirstName()+"','"+user.getLastName()+"','"+user.getUserName()+"','"+user.getPassword()+"')";
         stmt.executeUpdate(query);
@@ -58,7 +58,7 @@ public void insertFiledata(UploadObject file){
     String query;
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "password");
         Statement stmt = (Statement) con.createStatement();
         query = "INSERT into file_details (username, filename, size, date_created) values ('"+file.getUsername()+"','"+file.getFileName()+"','"+file.getSize()+"','"+file.getDateCreated()+"')";
         stmt.executeUpdate(query);
@@ -72,14 +72,14 @@ public void insertFiledata(UploadObject file){
         e.printStackTrace();
     }
 }
-/*
-public void deleteFile(File file){
+
+public void deleteFile(UploadObject file){
 	String query;
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "password");
         Statement stmt = (Statement) con.createStatement();
-        query = "delete from file_details";
+        query = "delete from file_details WHERE username='" + file.getUsername() + "' AND filename='" + file.getFileName() + "'";
         stmt.executeUpdate(query);
     } catch (InstantiationException e) {
         e.printStackTrace();
@@ -91,6 +91,6 @@ public void deleteFile(File file){
         e.printStackTrace();
     }
 }
-*/
+
 }
 
