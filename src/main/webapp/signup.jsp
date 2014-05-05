@@ -82,7 +82,7 @@ function uploadFormData(){
 <!-- 
 	<div class="container"></div>
 	<div class="well"></div>
-	<div id="loginbox" style="margin-top: 160px"></div>
+	<div id="loginbox" style="margin-top: 110px"></div>
 	<div style="margin-bottom: 100px"></div>
 	<div class="panel panel-info"></div>
 	<div class="panel-heading">
@@ -330,7 +330,7 @@ function uploadFormData(){
 
 <div id="footer">
 		<div class="navbar navbar-inverse navbar-fixed-bottom">
-			<div class="navbar-inner" style="min-height: 70px;">
+			<div class="navbar-inner" style="min-height: 50px;">
 				<div style="margin: 10px 5px 10px 5px; float: left;">
 					<span style="color: white;">Copyright &copy; AirBox</span>
 				</div>
