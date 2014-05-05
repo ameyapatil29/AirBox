@@ -9,6 +9,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -65,14 +68,18 @@ public class UploadFileService {
 		
 		UploadObject uploadobject = new UploadObject();
 		uploadobject.setFileName(contentDispositionHeader.getFileName());
-		uploadobject.setSize(contentDispositionHeader.getSize());
+		//uploadobject.setSize(contentDispositionHeader.getSize());
+		//uploadobject.setDateCreated(contentDispositionHeader.getCreationDate());
+		uploadobject.setSize(fileobject.length());
 		//uploadobject.setUsername(username); remaining part of taking username dynamically from the session
-		uploadobject.setDateCreated(contentDispositionHeader.getCreationDate());
 		
 		System.out.println("upload object size is "+ uploadobject.getSize());
 		System.out.println("uploaded object date created is "+uploadobject.getDateCreated());
-		
-	
+		System.out.println("upload object size is "+ fileobject.length());//new
+		//System.out.println("uploaded object date created is "+ dateFormat.format(date));//new
+		DbConnection dbcon = new DbConnection();
+		dbcon.insertFiledata(uploadobject);
+		System.out.println("file inserted again");
 		return Response.status(200).entity(output).build();
 
 	}
@@ -83,7 +90,7 @@ public class UploadFileService {
     public Response downloadObjects(){
     	
     	String output="Files downloaded at location: C:/Users/Rohit/Desktop/AirBoxRepo/";
-    	String downloadLocation = "C:/Users/Rohit/Desktop/AirBoxRepo/";
+    	String downloadLocation = "C:/Users/Bhagyashree/Desktop/AirBoxRepo/";
     	AWSFacade awsFacade=new AWSFacade();
     	output=awsFacade.downloadAllS3BucketObjects(downloadLocation);
     	return Response.status(200).entity(output).build();
@@ -95,7 +102,7 @@ public class UploadFileService {
     public Response downloadOneObject(@PathParam("objectKey") String key){
     	
     	String output="Files downloaded at location: C:/Users/Rohit/Desktop/AirBoxRepo/";
-    	String downloadLocation = "C:/Users/Rohit/Desktop/AirBoxRepo/";
+    	String downloadLocation = "C:/Users/Bhagyashree/Desktop/AirBoxRepo/";
     	AWSFacade awsFacade=new AWSFacade();
     	output=awsFacade.downloadS3BucketObject(downloadLocation, key);
     	return Response.status(200).entity(output).build();
@@ -153,16 +160,23 @@ public class UploadFileService {
 	public Response userLogin(@FormParam("email") String email, 
 			@FormParam("password") String password ) {
 			String output = "";
+			String invalidUser = "Invalid User";
 			System.out.println("Username is: "+email);
 			DbConnection dbcon = new DbConnection();
+		
 			if(dbcon.loginCheck(email, password))
 			{
 			output = "Login Successful for "+ email;
-				
 			System.out.println("User Validated");
-			
-			}
 			return Response.status(200).entity(output).build();
+			}
+			
+			else
+				System.out.println("User Invalid");
+				return Response.status(400).entity(invalidUser).build();
+			
 
 	}
 }
+
+
