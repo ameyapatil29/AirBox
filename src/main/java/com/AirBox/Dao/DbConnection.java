@@ -13,13 +13,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DbConnection {
+	
+	private static String connectionString = "jdbc:mysql://airbox.cezm78dqy1fn.us-west-1.rds.amazonaws.com:3306/airbox";
+	private static String dbUsername = "airbox";
+	private static String dbPassword = "password";
+	
 public boolean loginCheck(String username, String password){
     String query;
     boolean login = false;
 
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "");
+        Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
         query = "SELECT username, password FROM user_details WHERE username='" + username + "' AND password='" + password + "';";
         System.out.println("username"+username+"pwd"+password);
@@ -43,7 +48,7 @@ public void insertUser(User user){
     String query;
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "");
+        Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
         query = "INSERT into user_details (first_name, last_name, username, password) values ('"+user.getFirstName()+"','"+user.getLastName()+"','"+user.getUserName()+"','"+user.getPassword()+"')";
         stmt.executeUpdate(query);
@@ -69,7 +74,7 @@ public boolean insertFiledata(UploadObject file){
 	long allowedSize =0;
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "");
+        Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
         
         query1="SELECT 1048576-sum(filesize) FROM airbox.file_details WHERE username='bhagya@gmail.com'";
@@ -109,7 +114,7 @@ public void shareFile(UploadObject sharedfile){
 	Date date = new Date();
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "");
+        Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
         query = "INSERT into share_details (owenername, shareuser, filename, date_created) values ('"+"bhagya@gmail.com"+"','"+sharedfile.getFileName()+"','"+sharedfile.getFileName()+"','"+dateFormat.format(date)+"')";
         System.out.println("file inserted in db");
@@ -129,7 +134,7 @@ public void deleteFile(UploadObject file){
 	String query;
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "");
+        Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
         query = "delete from file_details WHERE username='" + file.getUsername() + "' AND filename='" + file.getFileName() + "'";
         stmt.executeUpdate(query);
