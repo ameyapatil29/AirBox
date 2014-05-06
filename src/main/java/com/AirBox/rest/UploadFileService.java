@@ -64,9 +64,9 @@ public class UploadFileService {
 			ui = new ConcreteUserInfo("chetan.burande7@gmail.com");
 			cm = new ConcreteMessage(msgBody, msgHeader);
 			as = new AmazonSESSample();
-			/*ui.setReEmail("chetan.burande7@gmail.com");
+			//ui.setReEmail("chetan.burande7@gmail.com");
 			cm.setMsgBody(msgBody);
-			cm.setMsgSubject(msgHeader);*/
+			cm.setMsgSubject(msgHeader);
 			as.setConnec(ui, cm);
 		}
 		
@@ -76,7 +76,6 @@ public class UploadFileService {
 		//uploadobject.setDateCreated(contentDispositionHeader.getCreationDate());
 		uploadobject.setSize(fileobject.length());
 		//uploadobject.setUsername(username); remaining part of taking username dynamically from the session
-		
 		System.out.println("upload object size is "+ uploadobject.getSize());
 		System.out.println("uploaded object date created is "+uploadobject.getDateCreated());
 		System.out.println("upload object size is "+ fileobject.length());//new
@@ -163,8 +162,8 @@ public class UploadFileService {
 			as = new AmazonSESSample();
 			cm = new ConcreteMessage(msgBody, msgHeader);
 			//ui.setReEmail(email);
-			//cm.setMsgBody(msgBody);
-			//cm.setMsgSubject(msgHeader);
+			cm.setMsgBody(msgBody);
+			cm.setMsgSubject(msgHeader);
 			as.setConnec(ui, cm);
 		return Response.status(200).entity(output).build();
 
