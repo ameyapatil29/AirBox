@@ -7,17 +7,17 @@ public static String mySecretId;
 public static String myBucketName;
 
 public static final String getMyAccessId() {
-	myAccessId= "AKIAIHIBWIHNCLLV47HQ";
+	myAccessId= "";
 	return myAccessId;
 }
 
 public static final String getMySecretId() {
-	mySecretId="9vkBQJcPZPm6nJhmn+tby3qInyNUl9W2yo/YAfTj"; 
+	mySecretId=""; 
 	return mySecretId;
 }
 
 public static final String getMyBucketName() {
-	myBucketName= "cmpe273bhagyashree";
+	myBucketName= "";
 	return myBucketName;
 }
 
