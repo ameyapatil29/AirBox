@@ -31,11 +31,11 @@ public class AWSFacade {
 		String response="fail";
 	
 		AWSCredentials myCredentials = new BasicAWSCredentials(
-				MyConfig.getMyAccessId(), MyConfig.getMySecretId());
+				S3Config.getMyAccessId(), S3Config.getMySecretId());
 		AmazonS3 s3 = new AmazonS3Client(myCredentials);        
 		Region usWest1 = Region.getRegion(Regions.US_WEST_1);
 		s3.setRegion(usWest1);
-		String bucketName = MyConfig.getMyBucketName();
+		String bucketName = S3Config.getMyBucketName();
 
 		System.out.println("===========================================");
 		System.out.println("      Getting Started with Amazon S3        ");
@@ -69,11 +69,11 @@ public class AWSFacade {
 	public String downloadAllS3BucketObjects(String localStoragePath){
 		String response="fail";
 		AWSCredentials myCredentials = new BasicAWSCredentials(
-				MyConfig.getMyAccessId(), MyConfig.getMySecretId());
+				S3Config.getMyAccessId(), S3Config.getMySecretId());
 		AmazonS3 s3 = new AmazonS3Client(myCredentials);        
 		Region usWest1 = Region.getRegion(Regions.US_WEST_1);
 		s3.setRegion(usWest1);
-		String bucketName = MyConfig.getMyBucketName();
+		String bucketName = S3Config.getMyBucketName();
 		System.out.println("\nDownloading all objects...");
 
 		System.out.println("===========================================");
@@ -117,11 +117,11 @@ public class AWSFacade {
 	public String downloadS3BucketObject(String localStoragePath, String key){
 		String response="fail";
 		AWSCredentials myCredentials = new BasicAWSCredentials(
-				MyConfig.getMyAccessId(), MyConfig.getMySecretId());
+				S3Config.getMyAccessId(), S3Config.getMySecretId());
 		AmazonS3 s3 = new AmazonS3Client(myCredentials);        
 		Region usWest1 = Region.getRegion(Regions.US_WEST_1);
 		s3.setRegion(usWest1);
-		String bucketName = MyConfig.getMyBucketName();
+		String bucketName = S3Config.getMyBucketName();
 		System.out.println("Downloading object...");
 
 		System.out.println("===========================================");
@@ -161,7 +161,7 @@ public class AWSFacade {
 		AmazonS3 s3 = new AmazonS3Client(new ClasspathPropertiesFileCredentialsProvider());
 		Region usWest1 = Region.getRegion(Regions.US_WEST_1);
 		s3.setRegion(usWest1);
-		String bucketName = MyConfig.getMyBucketName();
+		String bucketName = S3Config.getMyBucketName();
 
 		System.out.println("===========================================");
 		System.out.println("Getting Started with Amazon S3");
@@ -192,11 +192,11 @@ public class AWSFacade {
 		
 		public String deleteS3BucketObjects(String key){
 			AWSCredentials myCredentials = new BasicAWSCredentials(
-					MyConfig.getMyAccessId(), MyConfig.getMySecretId());
+					S3Config.getMyAccessId(), S3Config.getMySecretId());
 			AmazonS3 s3 = new AmazonS3Client(myCredentials); 
 			Region usWest1 = Region.getRegion(Regions.US_WEST_1);
 			s3.setRegion(usWest1);
-			String bucketName = MyConfig.getMyBucketName();
+			String bucketName = S3Config.getMyBucketName();
 			String response="fail";
 			System.out.println("===========================================");
 			System.out.println("Getting Started with Amazon S3");
@@ -229,7 +229,7 @@ public class AWSFacade {
 			AmazonS3 s3 = new AmazonS3Client(new ClasspathPropertiesFileCredentialsProvider());
 			Region usWest2 = Region.getRegion(Regions.US_WEST_1);
 			s3.setRegion(usWest2);
-			String bucketName = MyConfig.getMyBucketName();
+			String bucketName = S3Config.getMyBucketName();
 
 			System.out.println("===========================================");
 			System.out.println("Getting Started with Amazon S3");
