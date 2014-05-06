@@ -54,6 +54,8 @@ body {
 		padding-left: 5px;
 		padding-right: 5px;
 	}
+	
+
 }
 </style>
 <!-- 
@@ -90,7 +92,7 @@ function modal() {
 
 </head>
 
-<body>
+<body >
 	
 
 
@@ -120,9 +122,10 @@ function modal() {
 					<div class="row">
 
 						<form class="navbar-search pull-left">
-							<input type="text" class="search-query" placeholder="Search"
-								style="margin-left: 20px">
+							<input type="text" class="search-query" placeholder="Search" 
+								style="margin-left: 20px"><!-- change done on May 6 1:36pm -->
 						</form>
+						
 						<button class="btn btn-primary" type="button"
 							style="margin-left: 510px" onclick="modal()">Upload File</button>
 
@@ -148,7 +151,7 @@ function modal() {
 					</thead>
 					<tbody>
 						<tr>
-								<td>CMPE 273 Final Question Answer.pdf</td>
+								<td>cmpe273-greensheet.docx</td>
 								<!-- ${p.developerName} -->
 								<td>PDF</td>
 								<!-- ${p.rating} -->
