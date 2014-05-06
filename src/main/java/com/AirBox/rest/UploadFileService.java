@@ -47,7 +47,8 @@ public class UploadFileService {
 	public Response uploadFile(
 			 @FormDataParam("file") File fileobject,
 			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
-
+		
+		String invalidFile = "Invalid File";
 		AWSFacade awsFacade=new AWSFacade();
 		String output=awsFacade.addS3BucketObjects(fileobject,contentDispositionHeader.getFileName());
 		//If File Uploaded successfully then send EMail to user about the upload
@@ -78,12 +79,23 @@ public class UploadFileService {
 		System.out.println("upload object size is "+ fileobject.length());//new
 		//System.out.println("uploaded object date created is "+ dateFormat.format(date));//new
 		DbConnection dbcon = new DbConnection();
-		dbcon.insertFiledata(uploadobject);
-		System.out.println("file inserted again");
-		return Response.status(200).entity(output).build();
+		if(dbcon.insertFiledata(uploadobject)) 
+		{
+			System.out.println("file added finally");
+			return Response.status(200).entity(output).build();
+			}
+			
+			else
+				System.out.println("sorry...Not enough space ...");
+				return Response.status(400).entity(invalidFile).build();
+			
 
 	}
-	
+			
+			
+			
+		
+
 	@GET
     @Path("/download")
     @Consumes(MediaType.MULTIPART_FORM_DATA)

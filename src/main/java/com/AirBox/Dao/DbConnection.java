@@ -59,19 +59,37 @@ public void insertUser(User user){
     }
 }
 
-public void insertFiledata(UploadObject file){
-    String query;
+public boolean insertFiledata(UploadObject file){
+    String query1;
+    String query2;
+    boolean fileinsert = false;
 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	Date date = new Date();
 	long filesize= file.getSize()/1024;
+	long allowedSize =0;
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airbox", "root", "");
         Statement stmt = (Statement) con.createStatement();
         
-        query = "INSERT into file_details (username, filename, filesize, date_created) values ('"+"bhagya@gmail.com"+"','"+file.getFileName()+"','"+filesize+"','"+dateFormat.format(date)+"')";
-        System.out.println("file inserted in db");
-        stmt.executeUpdate(query);
+        query1="SELECT 1048576-sum(filesize) FROM airbox.file_details WHERE username='bhagya@gmail.com'";
+        
+        query2 = "INSERT into file_details (username, filename, filesize, date_created) values ('"+"bhagya@gmail.com"+"','"+file.getFileName()+"','"+filesize+"','"+dateFormat.format(date)+"')";
+          
+        ResultSet rs = stmt.executeQuery(query1);
+        while(rs.next()){
+        allowedSize = Long.parseLong(rs.getString(1));
+        }
+        if (file.getSize()< allowedSize)
+        {
+        	stmt.executeUpdate(query2);
+        	System.out.println("File Inserted");
+        	fileinsert=true;
+        }
+        else
+        {
+        System.out.println("file can not be inserted");}
+        
     } catch (InstantiationException e) {
         e.printStackTrace();
     } catch (IllegalAccessException e) {
@@ -81,6 +99,8 @@ public void insertFiledata(UploadObject file){
     } catch (SQLException e) {
         e.printStackTrace();
     }
+    return fileinsert;
+    
 }
 
 public void shareFile(UploadObject sharedfile){
