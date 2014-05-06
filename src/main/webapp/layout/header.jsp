@@ -41,7 +41,7 @@
 
 	
 <div id="header">
-	<div class="navbar navbar-inverse navbar-static-top">
+	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div id="headerNav" class="navbar-inner">
 			<a class="brand" href="#"><span style="color: white; margin: 0px 10px 0px 10px;">AirBox</span></a>
 			<% if(session.getAttribute("username") != null) { %>
@@ -69,7 +69,7 @@
 					--%>
 					<ul class="dropdown-menu">
 				      <li><a href="/project-vars/showProfile.htm">Profile</a></li>
-				      <li><a href="/project-vars/logout.htm">Logout</a></li>
+				      <li><a href="rest/file/logout">Logout</a></li>
 				    </ul>
 			    </li>
 			</ul>

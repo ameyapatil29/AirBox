@@ -13,6 +13,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -20,6 +22,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -170,7 +173,8 @@ public class UploadFileService {
 	@POST
 	@Path("/login")
 	public Response userLogin(@FormParam("email") String email, 
-			@FormParam("password") String password ) {
+			@FormParam("password") String password, 
+			@Context HttpServletRequest req) {
 			String output = "";
 			String invalidUser = "Invalid User";
 			System.out.println("Username is: "+email);
@@ -180,6 +184,10 @@ public class UploadFileService {
 			{
 			output = "Login Successful for "+ email;
 			System.out.println("User Validated");
+			HttpSession session= req.getSession(true);
+			session.setAttribute("username", email);
+			session.setAttribute("sessionId", session.getId());
+			
 			return Response.status(200).entity(output).build();
 			}
 			
@@ -189,6 +197,21 @@ public class UploadFileService {
 			
 
 	}
+	
+	
+	
+	@GET
+	@Path("/logout")
+	public Response logout(@Context HttpServletRequest req) {
+		HttpSession session= req.getSession(false);
+		session.invalidate();
+		System.out.println("User has logged out !");
+		String output = "User has succesfully logged out";
+		
+		 return Response.status(200).entity(output).build();
+		
+	}
+	
 }
 
 

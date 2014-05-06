@@ -43,7 +43,7 @@ function userLogin(){
 		   
 		    success:function(data, textStatus, jqXHR){
 		    	alert('success');
-		    	window.location.href="index.jsp";
+		    	window.location.href="userPage.jsp";
 		    },
 		    error: function(jqXHR, textStatus, errorThrown){
 		    	alert('Could not process request.. ' + errorThrown);
@@ -80,6 +80,7 @@ function EmailVerify() {
 <body>
 
 	
+	<%@include file="layout/header.jsp"%>
 
 	<!-- Sumant Try -->
 
@@ -154,20 +155,8 @@ function EmailVerify() {
 
 
 
-	<div id="footer">
-		<div class="navbar navbar-inverse navbar-fixed-bottom">
-			<div class="navbar-inner" style="min-height: 70px;">
-				<div style="margin: 10px 5px 10px 5px; float: left;">
-					<span style="color: white;">Copyright &copy; AirBox</span>
-				</div>
-				<div style="margin: 10px 10px 10px 10px; float: right;">
-					<a href="about.htm" style="color: white;">About Us</a> <span
-						style="color: white;">|</span> <a data-toggle="modal" href="#" style="color: white;">Contact
-						Us</a>
-				</div>
-			</div>
-		</div>
-	</div>
+	
+	<%@include file="layout/footer.jsp"%>
 
 </body>
 </html>

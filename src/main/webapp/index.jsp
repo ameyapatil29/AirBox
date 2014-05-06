@@ -1,6 +1,7 @@
 
 <html>
 <body>
+<%@include file="layout/header.jsp"%>
 	<h1>Upload File</h1>
  
 	<form action="rest/file/upload" method="post" enctype="multipart/form-data">
@@ -11,6 +12,6 @@
  
 	   <input type="submit" value="Upload It" />
 	</form>
- 
+ <%@include file="layout/footer.jsp"%>
 </body>
 </html>
