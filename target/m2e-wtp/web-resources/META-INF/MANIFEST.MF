@@ -1,10 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
 Built-By: sumantmurke
 Build-Jdk: 1.7.0_51
-=======
-Built-By: Rohit
-Build-Jdk: 1.7.0_45
->>>>>>> FETCH_HEAD
 Created-By: Maven Integration for Eclipse
 
