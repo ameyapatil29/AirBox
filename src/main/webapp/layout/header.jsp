@@ -46,7 +46,7 @@
 			<a class="brand" href="HomePage.html"><span style="color: white; margin: 0px 10px 0px 10px;">AirBox</span></a>
 			<% if(session.getAttribute("username") != null) { %>
 			<ul class="nav">
-				<li><a href="/project-vars/viewProjects.htm" style="color: white;"></a></li>
+				<li><a href="#" style="color: white;"></a></li>
 			</ul>
 			<% } %>
 			<% if(session.getAttribute("username") == null) { %>

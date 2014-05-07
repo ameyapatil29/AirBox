@@ -269,6 +269,14 @@ public class UploadFileService {
 			fileDetails = dbcon.getFileDetails(email);
 						
 			shareperc= dbcon.getSharePerc(email);
+		
+			for(int l=0; l<shareperc.size();l++){
+				System.out.println("shareperc sharename "+shareperc.get(l).getUsername());
+				System.out.println("shareperc filesize "+shareperc.get(l).getSize());
+				
+			}
+			
+			session.setAttribute("shareperc", shareperc);
 			
 				for(int i=0; i<fileDetails.size();i++){
 				System.out.println("first object upload object "+fileDetails.get(i).getFileName());

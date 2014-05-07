@@ -1,13 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!doctype html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page isELIgnored="false" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Insert title here</title>
+<script  src="Chart.js" /></script>
+<style>
+			canvas{
+			}
+		</style>
+
+
+<title>User Profile</title>
  <style type="text/css">
       body {
         padding-top: 60px;
@@ -87,7 +94,7 @@
            
            </table>
            
-           
+              <canvas id="canvas" height="145" width="145"></canvas>
            
           </div><!--/.well -->
         </div><!--/span-->
@@ -95,8 +102,7 @@
          
          
           <div class="row-fluid">
-           <c:choose>
-			<c:when test="${history ne null}">
+         
             <table id="example" class="table table-hover">
 					<thead>
 						<tr>
@@ -119,16 +125,26 @@
 					 
 				</table>
 				
-				</c:when>
-					<c:otherwise>
-					
-					<div id="projects">
-										<p>
-											Sorry, currently no files are shared. 
-										</p>
-									</div>
-								</c:otherwise>
-							</c:choose>
+				
+				<table id="ex" class="table table-hover">
+				<thead>
+				
+				<tr>
+				<th>Shared Name</th>
+				<th>Shared Percentage</th>
+				</tr>
+				
+				</thead>
+				<tbody>
+				<c:forEach var="share" items="${shareperc}">
+				<tr id="sharerow">
+				<td id="shareholdername">${share.getUsername()}</td>
+				<td id="sharepercentage">${share.getSize()}%</td>
+				</tr>
+				</c:forEach>
+				</tbody>
+				</table>
+							
 					
 					
 					
@@ -139,13 +155,43 @@
         </div><!--/span-->
       </div><!--/row-->
 
-    
+ </div>
 
     
 
-    </div><!--/.fluid-container-->
+<script>
 
-
+		var pieData = [
+				{
+					value: 14,
+					color:"#F38630"
+				},
+				{
+					value : 71,
+					color : "#E0E4CC"
+				},
+				{
+					value : 14,
+					color : "#69D2E7"
+				},
+				{
+					value : 0,
+					color : "#63DE98"
+				},
+				{
+					value : 0,
+					color : "#9193A6"
+				},
+				{
+					value : 0,
+					color : "#424DAE"
+				}
+			
+			];
+/*
+	var myPie = new Chart(document.getElementById("canvas").getContext("2d")).Pie(pieData);
+*/
+	</script>
 
 	<%@include file="layout/footer.jsp"%>
 

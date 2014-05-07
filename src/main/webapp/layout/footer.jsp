@@ -38,7 +38,7 @@
 					<span style="color: white;">Copyright &copy; AirBox</span>
 				</div>
 				<div style="margin: 10px 10px 10px 10px; float: right;">
-					<a href="about.htm" style="color: white;">About Us</a> <span
+					<a href="#" style="color: white;">About Us</a> <span
 						style="color: white;">|</span> <a data-toggle="modal" href="#" style="color: white;">Contact
 						Us</a> <span
 						style="color: white;">|</span><a data-toggle="modal" href="#" style="color: white;">Careers</a>
