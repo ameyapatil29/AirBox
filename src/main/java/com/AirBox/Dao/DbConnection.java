@@ -243,7 +243,6 @@ public List<UploadObject> getShareFileDetails (String username){
 	String query;
 	String filename;
 	String shareuser;
-	long filesize;
 	Date shareddate;
 	List<UploadObject> fileDetailsList = new ArrayList<UploadObject>();	
 	UploadObject fileDetailObject;
@@ -254,29 +253,22 @@ public List<UploadObject> getShareFileDetails (String username){
         Statement stmt = (Statement) con.createStatement();
         query = "SELECT * FROM share_details WHERE ownername ='"+username+"';";
         ResultSet rs = stmt.executeQuery(query);
-        /*rs.last();
-        int rowcount = 0;
-        rowcount = rs.getRow();
-        rs.beforeFirst();*/
+       
         
        while(rs.next()){
-        		
         		
         		username = rs.getString("ownername");
         		shareuser = rs.getString("shareuser");
         		filename = rs.getString("filename");
         		shareddate =rs.getDate("shareddate");
         		fileDetailObject = new UploadObject();
-        		fileDetailObject.setUsername(username);
         		fileDetailObject.setFileName(filename);
         		fileDetailObject.setUsername(shareuser);
         		fileDetailObject.setDateCreated(shareddate);
         		
         		fileDetailsList.add(fileDetailObject);
         	}
-        
-        	
-        
+              	
         
        
     } catch (InstantiationException e) {
@@ -328,6 +320,89 @@ public String getTotalSize (String username){
     return totalSize;
 	
 }
+
+
+
+
+public boolean shareCheck(String username){
+    String query;
+    boolean share = false;
+
+    try {
+        Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
+        Statement stmt = (Statement) con.createStatement();
+        query = "SELECT * FROM share_details WHERE ownername='" + username + "';";
+        
+        stmt.executeQuery(query);
+        ResultSet rs = stmt.getResultSet();
+        share = rs.first(); //rs.first();
+        
+    } catch (InstantiationException e) {
+        e.printStackTrace();
+    } catch (IllegalAccessException e) {
+        e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return share;
+}
+
+
+
+public List<UploadObject> getSharePerc (String username){
+	
+	
+	String query;
+	String shareuser;
+	Long perc;
+	Date shareddate;
+	List<UploadObject> fileDetailsList = new ArrayList<UploadObject>();	
+	UploadObject fileDetailObject;
+    try {
+    	
+        Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
+        Statement stmt = (Statement) con.createStatement();
+
+        query ="SELECT t.shareuser as shareuser, ROUND((t.num/t.total)*100,0) AS perc FROM ( SELECT shareuser, count(*) num,(select count(*) from airbox.share_details where ownername ='"+ username +"' ) as total FROM airbox.share_details where ownername ='"+ username +"' group by shareuser )t;";
+
+        //query = "SELECT * FROM share_details WHERE ownername ='"+username+"';";
+        ResultSet rs = stmt.executeQuery(query);
+       
+        
+       while(rs.next()){
+        		
+        		shareuser = rs.getString("shareuser");
+        		perc =rs.getLong("perc");
+        		fileDetailObject = new UploadObject();
+        		fileDetailObject.setUsername(shareuser);
+        		fileDetailObject.setSize(perc);
+        		System.out.println("perc"+ perc);
+        		fileDetailsList.add(fileDetailObject);
+        	}
+        
+        	
+        
+        
+       
+    } catch (InstantiationException e) {
+        e.printStackTrace();
+    } catch (IllegalAccessException e) {
+        e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    
+    
+    return fileDetailsList;
+	
+}
+
 
 
 public void insertUser(User user){

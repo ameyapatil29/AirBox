@@ -232,15 +232,14 @@ public class UploadFileService {
 			System.out.println("Username is: "+email);
 			DbConnection dbcon = new DbConnection();
 			//List<String> userDetails = new ArrayList<String>();
-			User userDetailObject = new User();
+			dbcon.getSharePerc(email);
+						User userDetailObject = new User();
 			List<UploadObject> fileDetails = new ArrayList<UploadObject>();
-
-			//System.out.println("");
-			
-
 
 			List<UploadObject> sharefiledetails = new ArrayList<UploadObject>();
 
+			List<UploadObject> shareperc = new ArrayList<UploadObject>();
+			
 			if(dbcon.loginCheck(email, password))
 			{
 			output = "Login Successful for "+ email;
@@ -262,9 +261,10 @@ public class UploadFileService {
 			//String bucketname = dbcon.getBucketName(email);			
 			userDetailObject = dbcon.getUserDetails(email);
 			fileDetails = dbcon.getFileDetails(email);
-
+						
+			shareperc= dbcon.getSharePerc(email);
 			
-			for(int i=0; i<fileDetails.size();i++){
+				for(int i=0; i<fileDetails.size();i++){
 				System.out.println("first object upload object "+fileDetails.get(i).getFileName());
 				
 			}
