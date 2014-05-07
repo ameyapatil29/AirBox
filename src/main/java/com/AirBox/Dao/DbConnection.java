@@ -119,6 +119,10 @@ public User getUserDetails (String uname){
              userD.setPassword(password);
              userD.setBucketname(bucketname);
         }
+        else{
+        	return null;
+        	
+        }
        
     } catch (InstantiationException e) {
         e.printStackTrace();

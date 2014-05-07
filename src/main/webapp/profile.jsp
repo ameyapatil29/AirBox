@@ -95,13 +95,13 @@
          
          
           <div class="row-fluid">
-            
+           <c:choose>
+			<c:when test="${history ne null}">
             <table id="example" class="table table-hover">
 					<thead>
 						<tr>
 							<th>Shared With</th>
 							<th>File Name</th>
-						
 							<th>Date Modified</th>
 						</tr>
 					</thead>
@@ -112,20 +112,27 @@
 							<td>${item.getFileName()}</td>
 						
 							<td>${item.getDateCreated()}</td>
-						
-						<!-- 
-							<td onclick="Files('${item.getFileName()}');"><button
-									class="btn btn-primary" type="button">Download</button></td>
-							<td onclick="shareFiles('${item.getFileName()}');"><button
-									class="btn btn-success" type="button">Share</button></td>
-							<td onclick="Files('${item.getFileName()}');"><button
-									class="btn btn-danger" type="button">Delete</button></td>
-					 -->
+					
 						</tr>
 						</c:forEach>
 					</tbody>
 					 
 				</table>
+				
+				</c:when>
+					<c:otherwise>
+					
+					<div id="projects">
+										<p>
+											Sorry, currently no files are shared. 
+										</p>
+									</div>
+								</c:otherwise>
+							</c:choose>
+					
+					
+					
+				
             <button class="btn btn-primary" type="button"
 							style="margin-left: 380px" onclick="window.location.href='userPage.jsp'">&laquo; Back to User page </button>
 				</div><!--/row-->

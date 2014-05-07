@@ -50,14 +50,14 @@ function checkPasswordMatch(){
 function uploadFormData(){
 	$("#reEnterPasswordInput").keyup(checkPasswordMatch());
 
-	 alert('inside uploadform');
+	// alert('inside uploadform');
 	 
 	   var fname = $('#login-firstname').val();
 	   var lname = $('#login-lastname').val();
 	   var email = $('#login-email').val();
 	   var password = $('#password').val();
 	 
-	 alert('name'+fname);
+	// alert('name'+fname);
 	   
 		$.ajax({
 			url : "rest/file/signup",

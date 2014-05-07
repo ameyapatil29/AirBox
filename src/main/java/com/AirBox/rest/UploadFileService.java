@@ -190,7 +190,8 @@ public class UploadFileService {
 	public Response userprofile(@FormParam("fname") String fname,
 			@FormParam("lname") String lname,
 			@FormParam("email") String email, 
-			@FormParam("password") String password ) {
+			@FormParam("password") String password,
+			@Context HttpServletRequest req) {
 			System.out.println("name is: "+fname);
 			User user = new User();
 			user.setFirstName(fname);
@@ -201,6 +202,11 @@ public class UploadFileService {
 			System.out.println("surname of the user is"+user.getLastName());
 			String output = "Thankyou for registring with us you will recieve email shortly "+ user.getFirstName();
 			DbConnection dbcon = new DbConnection();
+			
+			HttpSession session= req.getSession(true);
+			session.setAttribute("username", email);
+			session.setAttribute("sessionId", session.getId());
+			session.setAttribute("usersfirstname", fname);
 			
 			System.out.println("User added");
 			

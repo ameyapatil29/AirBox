@@ -147,7 +147,7 @@ function EmailVerify() {
 
 function logout(){
 	
-	alert("i am inside logut");
+	//alert("i am inside logut");
 
 	$.ajax({
 		url : "rest/file/logout",
@@ -155,7 +155,7 @@ function logout(){
 	    datatype : "text",
 	   
 	    success:function(data, textStatus, jqXHR){
-	    	alert('success');
+	    	alert('successfully logout');
 	    	window.location.href="HomePage.html";
 	    },
 	    error: function(jqXHR, textStatus, errorThrown){

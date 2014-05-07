@@ -29,6 +29,10 @@
 
 <script type="text/javascript">
 
+
+
+
+
 function userLogin(){
 	// alert('inside Login page');
 	   var email = $('#email').val();
