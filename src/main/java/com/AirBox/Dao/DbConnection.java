@@ -64,7 +64,7 @@ public void insertUser(User user){
     }
 }
 
-public boolean insertFiledata(UploadObject file){
+public boolean insertFiledata(UploadObject file, String username){
     String query1;
     String query2;
     boolean fileinsert = false;
@@ -77,9 +77,9 @@ public boolean insertFiledata(UploadObject file){
         Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
         
-        query1="SELECT 1048576-sum(filesize) FROM airbox.file_details WHERE username='bhagya@gmail.com'";
+        query1="SELECT 1048576-sum(filesize) FROM airbox.file_details WHERE username='"+ username +"'";
         
-        query2 = "INSERT into file_details (username, filename, filesize, date_created) values ('"+"bhagya@gmail.com"+"','"+file.getFileName()+"','"+filesize+"','"+dateFormat.format(date)+"')";
+        query2 = "INSERT into file_details (username, filename, filesize, date_created) values ('"+username+"','"+file.getFileName()+"','"+filesize+"','"+dateFormat.format(date)+"')";
           
         ResultSet rs = stmt.executeQuery(query1);
         while(rs.next()){
@@ -108,15 +108,18 @@ public boolean insertFiledata(UploadObject file){
     
 }
 
-public void shareFile(UploadObject sharedfile){
+public void shareFile(String username, String filename, String shareemail){
     String query;
+    String uname = username;
+    String fname = filename;
+    String smail = shareemail;
 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	Date date = new Date();
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
-        query = "INSERT into share_details (owenername, shareuser, filename, date_created) values ('"+"bhagya@gmail.com"+"','"+sharedfile.getFileName()+"','"+sharedfile.getFileName()+"','"+dateFormat.format(date)+"')";
+        query = "INSERT into share_details (owenername, shareuser, filename, date_created) values ('"+uname+"','"+smail+"','"+fname+"','"+dateFormat.format(date)+"')";
         System.out.println("file inserted in db");
         stmt.executeUpdate(query);
     } catch (InstantiationException e) {
@@ -129,7 +132,6 @@ public void shareFile(UploadObject sharedfile){
         e.printStackTrace();
     }
 }
-
 public void deleteFile(UploadObject file){
 	String query;
     try {

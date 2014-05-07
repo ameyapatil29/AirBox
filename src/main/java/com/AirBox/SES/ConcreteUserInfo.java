@@ -23,6 +23,12 @@ public class ConcreteUserInfo implements UserInformation {
 		
 	}
 	
+	public ConcreteUserInfo(String sendersEmail, String receiversEmail){
+		super();
+		setSeEmail(sendersEmail);
+		setReEmail(receiversEmail);
+	}
+	
 	public void setReEmail(){
 		this.receiversEmail = randomizer();
 	}

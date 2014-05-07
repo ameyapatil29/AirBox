@@ -11,7 +11,7 @@ public class ConcreteMessage implements MessageBodyFormat{
 		super();
 		
 		this.msgBody = "Thank You for subscribing with us. Hope we prove usefull to you and your organisation";
-		this.msgSubject = " AirBox subscription confirmation mail";
+		this.msgSubject = "AirBox subscription confirmation mail";
 	}
 
 	public ConcreteMessage(String msgBody, String msgSubject) {
