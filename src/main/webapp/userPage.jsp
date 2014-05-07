@@ -12,9 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<!-- Le styles
-    <link href="../assets/css/bootstrap.css" rel="stylesheet">
-     -->
+
 
 <link href="bootstrap/bootstrap.min.css" rel="stylesheet" media="screen"
 	type="text/css">
@@ -24,8 +22,16 @@
 	media="screen" type="text/css">
 <link href="bootstrap/bootstrap-responsive.min.css" rel="stylesheet"
 	media="screen" type="text/css">
+<!-- <script
+    src="http://cdn.datatables.net/1.10.0-rc.1/js/jquery.dataTables.js"></script>	
 <script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+
+
+<!-- <script
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+
+
 <script type="text/javascript" src="jsbootstrap/bootstrap.js" /></script>
 <script type="text/javascript" src="jsbootstrap/bootstrap.min.js" /></script>
 <script type="text/javascript" src="jsbootstrap/bootstrap-dropdown.js" /></script>
@@ -54,35 +60,86 @@ body {
 		padding-left: 5px;
 		padding-right: 5px;
 	}
-	
-
 }
 </style>
-<!-- 
-    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
- -->
-<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
-    <![endif]-->
-
-<!-- Fav and touch icons -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144"
-	href="../assets/ico/apple-touch-icon-144-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="114x114"
-	href="../assets/ico/apple-touch-icon-114-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="72x72"
-	href="../assets/ico/apple-touch-icon-72-precomposed.png">
-<link rel="apple-touch-icon-precomposed"
-	href="../assets/ico/apple-touch-icon-57-precomposed.png">
-<link rel="shortcut icon" href="../assets/ico/favicon.png">
-
 
 <script type="text/javascript">
 function modal() {
 
 	$("#myModal").modal('show');
 
+}
+
+function Files(file){
+	
+	alert("i am inside download"+file);
+	var uri = "rest/file/download/"+file;
+	$.ajax({
+		url : uri,
+	    type: "GET",
+	    datatype : "json",
+	   
+	    success:function(data, textStatus, jqXHR){
+	    	alert('success');
+	    	window.location.href="userPage.jsp";
+	    },
+	    error: function(jqXHR, textStatus, errorThrown){
+	    	alert('Could not process request.. ' + errorThrown);
+	    }
+	});
+	
+}
+
+var testfile;
+function shareFiles(file){
+	alert('name of the file is '+file);
+	testfile = file;
+	
+	$("#shareModal").modal('show');
+}
+function submitsharedata(){
+	alert("name of the test file is "+testfile);
+	var filetobeshared = testfile;
+	var shareemail=  $('#shareemail').val();
+	
+	alert("file shared with "+shareemail+" is "+filetobeshared);
+	
+	$.ajax({
+		url : "rest/file/sharelink",
+	    type: "POST",
+	    data : "shareemail=" + shareemail + "&filename=" + filetobeshared,
+	   
+	    success:function(data, textStatus, jqXHR){
+	    	alert('success');
+	    	window.location.href="userPage.jsp";
+	    },
+	    error: function(jqXHR, textStatus, errorThrown){
+	    	alert('Could not process request.. ' + errorThrown);
+	    }
+	});
+	
+	
+}
+
+
+function EmailVerify() {
+    var email = document.getElementById('email').value;
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var message = document.getElementById('emailMessage');
+    var badColor = "red";
+    message.style.color = badColor;
+
+    if (!filter.test(email)) {   
+       $('#emailMessage').html("Please Enter valid Email");
+       return false;
+    }else{
+       $('#emailMessage').html("");
+       $.get('/check_email?email=' + email, function(data){
+            if(data == "true")
+                $('#emailMessage').html("Email already exists");
+       });
+    }
+    return true;
 }
 
 </script>
@@ -92,8 +149,8 @@ function modal() {
 
 </head>
 
-<body >
-	
+<body>
+
 
 
 
@@ -106,11 +163,11 @@ function modal() {
 			<div class="span3">
 				<div class="well sidebar-nav">
 
-						<h4>Space Used</h4>
-						<div class="progress progress-info progress-striped">
-							<div class="bar" style="width: 83.3%"></div>
-						</div>
-						
+					<h4>Space Used</h4>
+					<div class="progress progress-info progress-striped">
+						<div class="bar" style="width: 83.3%"></div>
+					</div>
+
 				</div>
 				<!--/.well -->
 			</div>
@@ -122,10 +179,11 @@ function modal() {
 					<div class="row">
 
 						<form class="navbar-search pull-left">
-							<input type="text" class="search-query" placeholder="Search" 
-								style="margin-left: 20px"><!-- change done on May 6 1:36pm -->
+							<input type="text" class="search-query" placeholder="Search"
+								style="margin-left: 20px">
+							<!-- change done on May 6 1:36pm -->
 						</form>
-						
+
 						<button class="btn btn-primary" type="button"
 							style="margin-left: 510px" onclick="modal()">Upload File</button>
 
@@ -133,15 +191,10 @@ function modal() {
 							src="images/Basic-Upload-2-icon.png" />
 
 					</div>
-					<div>
-					
-					
-					
-					
-					</div>
+					<div></div>
 				</div>
 
-				<table   class="table table-hover"  id="example" >
+				<table id="example" class="table table-hover">
 					<thead>
 						<tr>
 							<th>File Name</th>
@@ -151,83 +204,43 @@ function modal() {
 					</thead>
 					<tbody>
 						<tr>
-								<td>cmpe273-greensheet.docx</td>
-								<!-- ${p.developerName} -->
-								<td>PDF</td>
-								<!-- ${p.rating} -->
-								<td>2014-03-03 07:32</td>
-								<!-- ${p.date} -->
-								<td><button class="btn btn-primary" type="button">Download</button></td>
-								<td><button class="btn btn-success" type="button">Share</button></td>
-							</tr>
-							
-								<!-- second row -->
-							<tr>
-								<td>CMPE 283 Final Question Answer.pdf</td>
-								<!-- ${p.developerName} -->
-								<td>PDF</td>
-								<!-- ${p.rating} -->
-								<td>2014-03-03 05:32</td>
-								<!-- ${p.date} -->
-								<td><button class="btn btn-primary" type="button">Download</button></td>
-								<td><button class="btn btn-success" type="button">Share</button></td>
-							</tr>
-							
-							<!-- Third row -->
-							<tr>
-								<td>GoldenGate.jpg</td>
-								<!-- ${p.developerName} -->
-								<td>Image</td>
-								<!-- ${p.rating} -->
-								<td>2014-04-03 06:27</td>
-								<!-- ${p.date} -->
-								<td><button class="btn btn-primary" type="button">Download</button></td>
-								<td><button class="btn btn-success" type="button">Share</button></td>
-							</tr>
+							<td>cmpe273-greensheet.docx</td>
+							<!-- ${p.developerName} -->
+							<td>PDF</td>
+							<!-- ${p.rating} -->
+							<td>2014-03-03 07:32</td>
+							<!-- ${p.date} -->
+							<td onclick="Files('cmpe273-greensheet.docx');"><button
+									class="btn btn-primary" type="button">Download</button></td>
+							<td onclick="shareFiles('cmpe273-greensheet.docx');"><button
+									class="btn btn-success" type="button">Share</button></td>
+						</tr>
 
-					
-<!-- ******************************changing***************************************************************************************************************-->
-					
-					<!-- 
-						<c:forEach var="p" items="${ratings}" >
-					 -->	 	<tr>
-								<td>CMPE 273 Final Question Answer.pdf</td>
-								<!-- ${p.developerName} -->
-								<td>PDF</td>
-								<!-- ${p.rating} -->
-								<td>2014-03-03 07:32</td>
-								<!-- ${p.date} -->
-								<td><button class="btn btn-primary" type="button">Download</button></td>
-								<td><button class="btn btn-success" type="button">Share</button></td>
-							</tr>
-							<!-- second row -->
-							<tr>
-								<td>CMPE 283 Final Question Answer.pdf</td>
-								<!-- ${p.developerName} -->
-								<td>PDF</td>
-								<!-- ${p.rating} -->
-								<td>2014-03-03 05:32</td>
-								<!-- ${p.date} -->
-								<td><button class="btn btn-primary" type="button">Download</button></td>
-								<td><button class="btn btn-success" type="button">Share</button></td>
-							</tr>
-							<!-- Third row -->
-							<tr>
-								<td>GoldenGate.jpg</td>
-								<!-- ${p.developerName} -->
-								<td>Image</td>
-								<!-- ${p.rating} -->
-								<td>2014-04-03 06:27</td>
-								<!-- ${p.date} -->
-								<td><button class="btn btn-primary" type="button">Download</button></td>
-								<td><button class="btn btn-success" type="button">Share</button></td>
-							</tr>
+						<!-- second row -->
+						<tr>
+							<td>CMPE 283 Final Question Answer.pdf</td>
+							<!-- ${p.developerName} -->
+							<td>PDF</td>
+							<!-- ${p.rating} -->
+							<td>2014-03-03 05:32</td>
+							<!-- ${p.date} -->
+							<td><button class="btn btn-primary" type="button">Download</button></td>
+							<td><button class="btn btn-success" type="button">Share</button></td>
+						</tr>
 
- <!-- 
-						</c:forEach>
-  -->
-  <!-- ************************************************************************************************************************************************ -->
-					
+						<!-- Third row -->
+						<tr>
+							<td>GoldenGate.jpg</td>
+							<!-- ${p.developerName} -->
+							<td>Image</td>
+							<!-- ${p.rating} -->
+							<td>2014-04-03 06:27</td>
+							<!-- ${p.date} -->
+							<td><button class="btn btn-primary" type="button">Download</button></td>
+							<td><button class="btn btn-success" type="button">Share</button></td>
+						</tr>
+
+
 					</tbody>
 
 				</table>
@@ -242,9 +255,9 @@ function modal() {
 
 
 	</div>
-	<!-- Modal -->
-	
-						<div id="myModal" class="modal fade">
+	<!-- Modal for upload-->
+
+	<div id="myModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -262,10 +275,41 @@ function modal() {
 						</p>
 
 						<input type="submit" value="Upload It" />
-				</form>
+					</form>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+
+
+		</div>
+
+	</div>
+
+
+	<!-- Modal for share file -->
+
+	<div id="shareModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Share your file with</h4>
+				</div>
+				<div class="modal-body">
+
+					<form action="rest/file/upload" method="post"
+						enctype="multipart/form-data">
+						<input type="email" class="form-control" id="shareemail"
+							placeholder="Your registered email" onChange="EmailVerify();">
+
+
+						
+					</form>
 				</div>
 				<div class="modal-footer">
 				
+				<input type="submit" value="Submit" onclick="submitsharedata()" />
 				</div>
 			</div>
 
@@ -273,7 +317,11 @@ function modal() {
 		</div>
 
 	</div>
-					
+
+
+
+
+
 
 
 	<%@include file="layout/footer.jsp"%>

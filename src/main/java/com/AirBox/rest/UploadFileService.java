@@ -30,6 +30,10 @@ import javax.ws.rs.core.Response;
 import com.AirBox.Dao.DbConnection;
 import com.AirBox.Domain.UploadObject;
 import com.AirBox.Domain.User;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 024ba510fb54f1e2544ec1e50f8a259c864645ea
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Region;
@@ -37,7 +41,13 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
+<<<<<<< HEAD
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
+=======
+
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
+
+>>>>>>> 024ba510fb54f1e2544ec1e50f8a259c864645ea
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
@@ -134,7 +144,7 @@ public class UploadFileService {
     public Response downloadOneObject(@PathParam("objectKey") String key){
     	
     	String output="Files downloaded at location: C:/Users/Rohit/Desktop/AirBoxRepo/";
-    	String downloadLocation = "C:/Users/Bhagyashree/Desktop/AirBoxRepo/";
+    	String downloadLocation = "/Users/sumantmurke/Desktop/download/";
     	AWSFacade awsFacade=new AWSFacade();
     	output=awsFacade.downloadS3BucketObject(downloadLocation, key);
     	return Response.status(200).entity(output).build();
