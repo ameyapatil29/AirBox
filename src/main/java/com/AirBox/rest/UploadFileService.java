@@ -29,6 +29,13 @@ import javax.ws.rs.core.Response;
 import com.AirBox.Dao.DbConnection;
 import com.AirBox.Domain.UploadObject;
 import com.AirBox.Domain.User;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.Bucket;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
@@ -40,6 +47,13 @@ public class UploadFileService {
 	public ConcreteMessage cm;
 	public ConcreteUserInfo ui;
 	public AmazonSESSample as;
+	
+	AWSCredentials myCredentials = new BasicAWSCredentials(
+			S3Config.getMyAccessId(), S3Config.getMySecretId());
+	AmazonS3 newc = new AmazonS3Client(myCredentials);        
+	Region usWest1 = Region.getRegion(Regions.US_WEST_1);
+	
+	
 /*
  * Rest API for handling between AWS and files  
  */
@@ -151,12 +165,15 @@ public class UploadFileService {
 			user.setLastName(lname);
 			user.setUserName(email);
 			user.setPassword(password);
-			//AWSFacade fact= new AWSFacade(user);
+			AWSFacade fact= new AWSFacade();
 			System.out.println("surname of the user is"+user.getLastName());
 			String output = "Thankyou for registring with us you will recieve email shortly "+ user.getFirstName();
 			DbConnection dbcon = new DbConnection();
 			dbcon.insertUser(user);
 			System.out.println("User added");
+			
+			Bucket bucket = fact.makeNewBucket(user);
+			
 			String msgBody ="Your account was created on AirBox.";
 			String msgHeader = "Registration Confirmation";
 			
