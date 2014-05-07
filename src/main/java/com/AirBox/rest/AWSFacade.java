@@ -231,13 +231,13 @@ public class AWSFacade {
 		
 		
 		
-		public String deleteS3BucketObjects(String key){
+		public String deleteS3BucketObjects(String key, String bucketName){
 			AWSCredentials myCredentials = new BasicAWSCredentials(
 					S3Config.getMyAccessId(), S3Config.getMySecretId());
 			AmazonS3 s3 = new AmazonS3Client(myCredentials); 
 			Region usWest1 = Region.getRegion(Regions.US_WEST_1);
 			s3.setRegion(usWest1);
-			String bucketName = S3Config.getMyBucketName();
+			//String bucketName = S3Config.getMyBucketName();
 			String response="fail";
 			System.out.println("===========================================");
 			System.out.println("Getting Started with Amazon S3");

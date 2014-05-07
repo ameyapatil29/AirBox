@@ -166,12 +166,18 @@ public class UploadFileService {
     @Path("/delete/{objectkey}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response deleteObject(
-    		@PathParam("objectkey") String key){
+    		@PathParam("objectkey") String key, @Context HttpServletRequest req){
     	AWSFacade awsFacade=new AWSFacade();
+    	HttpSession session= req.getSession(true);
     	System.out.println("key::::::: "+key);
+    	String username=(String) session.getAttribute("username");
+    	//session.getAttribute("filename")
+    	DbConnection dbnewcon = new DbConnection();
+		String bucketname = dbnewcon.getBucketName(username);
     //	DbConnection dbcon = new DbConnection();
     //	dbcon.deleteFile(key);
-    	String output=awsFacade.deleteS3BucketObjects(key);
+    	String output=awsFacade.deleteS3BucketObjects(key,bucketname);
+    	dbnewcon.deleteFile(username, key);
     	return Response.status(200).entity(output).build();
     }
 	
