@@ -300,11 +300,32 @@ public class AWSFacade {
 			 AmazonS3 s3 = new AmazonS3Client(myCredentials);
 			 //String bucketName = S3Config.getMyBucketName();
 			 String fname = fileName;
+			 String fileLink = "";
+			 try{
 			 GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest("chetanchitamrel", fname);
 			 URL url = s3.generatePresignedUrl(request);
-			 String fileLink = url.toString();
-			 return fileLink;
+			 fileLink = url.toString();
+			 System.out.println("File link - " + fileLink);
 			 
+			 } catch (AmazonServiceException exception) {
+					System.out.println("Caught an AmazonServiceException, " +
+							"which means your request made it " +
+							"to Amazon S3, but was rejected with an error response " +
+					"for some reason.");
+					System.out.println("Error Message: " + exception.getMessage());
+					System.out.println("HTTP  Code: "    + exception.getStatusCode());
+					System.out.println("AWS Error Code:" + exception.getErrorCode());
+					System.out.println("Error Type:    " + exception.getErrorType());
+					System.out.println("Request ID:    " + exception.getRequestId());
+				} catch (AmazonClientException ace) {
+					System.out.println("Caught an AmazonClientException, " +
+							"which means the client encountered " +
+							"an internal error while trying to communicate" +
+							" with S3, " +
+					"such as not being able to access the network.");
+					System.out.println("Error Message: " + ace.getMessage());
+				}
+			 return fileLink;
 				
 		 }
 
