@@ -1,5 +1,8 @@
 
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page isELIgnored="false" %>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -159,7 +162,25 @@ function logout(){
 }
 
 
-
+function deleteFiles(file){
+	
+	alert("i am inside delete "+file);
+	var uri = "rest/file/delete/"+file;
+	$.ajax({
+		url : uri,
+	    type: "GET",
+	    datatype : "json",
+	   
+	    success:function(data, textStatus, jqXHR){
+	    	alert('success');
+	    	window.location.href="userPage.jsp";
+	    },
+	    error: function(jqXHR, textStatus, errorThrown){
+	    	alert('Could not process request.. ' + errorThrown);
+	    }
+	});
+	
+}
 
 
 
@@ -193,7 +214,7 @@ function logout(){
 						<div class="bar" style="width: 83.3%"></div>
 					</div>
 					<button class="btn btn-primary" type="button" onclick ="logout();" >Logout</button>
-					<button class="btn btn-primary" type="button" onclick="window.location.href='profile.jsp'" >Profile</button>
+					<button class="btn btn-primary" type="button" onclick="window.location.href='profile.jsp'" >Profile &raquo;</button>
 				</div>
 				<!--/.well -->
 			</div>
@@ -211,7 +232,7 @@ function logout(){
 						</form>
 
 						<button class="btn btn-primary" type="button"
-							style="margin-left: 480px" onclick="modal()">Upload File</button>
+							style="margin-left: 447px" onclick="modal()">Upload File</button>
 
 						<input type="image" id="myimage"
 							src="images/Basic-Upload-2-icon.png" />
@@ -224,51 +245,29 @@ function logout(){
 					<thead>
 						<tr>
 							<th>File Name</th>
-							<th>File Content</th>
+							<th>File Size</th>
 							<th>Date Modified</th>
 						</tr>
 					</thead>
 					<tbody>
+					<c:forEach var="item" items="${fileDetails}">
 						<tr>
-							<td>cmpe273-greensheet.docx</td>
-							<!-- ${p.developerName} -->
-							<td>PDF</td>
-							<!-- ${p.rating} -->
-							<td>2014-03-03 07:32</td>
-							<!-- ${p.date} -->
-							<td onclick="Files('cmpe273-greensheet.docx');"><button
+							<td>${item.getFileName()}</td>
+							
+							<td>${item.getSize()}</td>
+							
+							<td>${item.getDateCreated()}</td>
+						
+							<td onclick="Files('${item.getFileName()}');"><button
 									class="btn btn-primary" type="button">Download</button></td>
-							<td onclick="shareFiles('cmpe273-greensheet.docx');"><button
+							<td onclick="shareFiles('${item.getFileName()}');"><button
 									class="btn btn-success" type="button">Share</button></td>
+							<td onclick="DeleteFiles('${item.getFileName()}');"><button
+									class="btn btn-danger" type="button">Delete</button></td>
 						</tr>
-
-						<!-- second row -->
-						<tr>
-							<td>CMPE 283 Final Question Answer.pdf</td>
-							<!-- ${p.developerName} -->
-							<td>PDF</td>
-							<!-- ${p.rating} -->
-							<td>2014-03-03 05:32</td>
-							<!-- ${p.date} -->
-							<td><button class="btn btn-primary" type="button">Download</button></td>
-							<td><button class="btn btn-success" type="button">Share</button></td>
-						</tr>
-
-						<!-- Third row -->
-						<tr>
-							<td>GoldenGate.jpg</td>
-							<!-- ${p.developerName} -->
-							<td>Image</td>
-							<!-- ${p.rating} -->
-							<td>2014-04-03 06:27</td>
-							<!-- ${p.date} -->
-							<td><button class="btn btn-primary" type="button">Download</button></td>
-							<td><button class="btn btn-success" type="button">Share</button></td>
-						</tr>
-
-
+						</c:forEach>
 					</tbody>
-
+					 
 				</table>
 				<button class="btn btn-primary" type="button">Download All</button>
 

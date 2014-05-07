@@ -30,7 +30,7 @@
 <script type="text/javascript">
 
 function userLogin(){
-	 alert('inside Login page');
+	// alert('inside Login page');
 	   var email = $('#email').val();
 	   var password = $('#password').val();
 	 
@@ -83,7 +83,7 @@ function EmailVerify() {
 	
 	<%@include file="layout/header.jsp"%>
 
-	<!-- Sumant Try -->
+
 
 	<div id="container" style="padding-top: 40px;" align="center">
 		<div class="container-fluid">

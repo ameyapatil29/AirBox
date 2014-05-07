@@ -67,7 +67,7 @@
 	 					<c:otherwise>--%>
 	 					
 	 					
-	 						<a class="dropdown-toggle" data-toggle="dropdown" href="#loggedInDown" style="color: white;float:right;">Hello ${username} <span class="caret"></span></a>
+	 						<a class="dropdown-toggle" data-toggle="dropdown" href="#loggedInDown" style="color: white;float:right; margin-top:11px" onclick="window.location.href='profile.jsp'">Hello ${usersfirstname} ! <span class="caret"></span></a>
 	 			
 	 			
 	 			

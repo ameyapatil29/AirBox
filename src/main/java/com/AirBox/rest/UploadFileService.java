@@ -223,7 +223,9 @@ public class UploadFileService {
 			//List<String> userDetails = new ArrayList<String>();
 			User userDetailObject = new User();
 			List<UploadObject> fileDetails = new ArrayList<UploadObject>();
- 		
+			//System.out.println("");
+			
+
 			if(dbcon.loginCheck(email, password))
 			{
 			output = "Login Successful for "+ email;
@@ -231,21 +233,30 @@ public class UploadFileService {
 			HttpSession session= req.getSession(true);
 			session.setAttribute("username", email);
 			session.setAttribute("sessionId", session.getId());
-<<<<<<< HEAD
+
 			
-			/*User user =	dbcon.getUserDetails(email);
+			User user =	dbcon.getUserDetails(email);
 			user.getFirstName();
 			System.out.println("users firsname"+user.getFirstName());
 			
 			session.setAttribute("usersfirstname", user.getFirstName());
-			session.setAttribute("userslastname", user.getLastName());*/
+			session.setAttribute("userslastname", user.getLastName());
 			//session.setAttribute("userspassword", user.getPassword());
 			
-=======
+
 			//String bucketname = dbcon.getBucketName(email);			
 			userDetailObject = dbcon.getUserDetails(email);
 			fileDetails = dbcon.getFileDetails(email);
->>>>>>> FETCH_HEAD
+			
+			for(int i=0; i<fileDetails.size();i++){
+				System.out.println("first object upload object "+fileDetails.get(i).getFileName());
+				
+			}
+		//	HttpSession session= req.getSession(true);
+			session.setAttribute("fileDetails", fileDetails);
+	
+			
+			
 			return Response.status(200).entity(output).build();
 			}
 			
