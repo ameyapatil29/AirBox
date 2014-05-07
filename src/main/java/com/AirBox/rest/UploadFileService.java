@@ -49,8 +49,11 @@ public class UploadFileService {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public Response uploadFile(
 			 @FormDataParam("file") File fileobject,
-			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
+			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader,@Context HttpServletRequest req) {
+		String username;
 		
+		HttpSession session= req.getSession(true);
+		username=(String) session.getAttribute("username");
 		String invalidFile = "Invalid File";
 		AWSFacade awsFacade=new AWSFacade();
 		String output=awsFacade.addS3BucketObjects(fileobject,contentDispositionHeader.getFileName());
@@ -72,17 +75,15 @@ public class UploadFileService {
 		
 		UploadObject uploadobject = new UploadObject();
 		uploadobject.setFileName(contentDispositionHeader.getFileName());
-		//uploadobject.setSize(contentDispositionHeader.getSize());
-		//uploadobject.setDateCreated(contentDispositionHeader.getCreationDate());
 		uploadobject.setSize(fileobject.length());
-		//uploadobject.setUsername(username); remaining part of taking username dynamically from the session
+		uploadobject.setUsername(username); 
 		
-		System.out.println("upload object size is "+ uploadobject.getSize());
+		System.out.println("upload object user is "+ uploadobject.getUsername());
 		System.out.println("uploaded object date created is "+uploadobject.getDateCreated());
 		System.out.println("upload object size is "+ fileobject.length());//new
 		//System.out.println("uploaded object date created is "+ dateFormat.format(date));//new
 		DbConnection dbcon = new DbConnection();
-		if(dbcon.insertFiledata(uploadobject)) 
+		if(dbcon.insertFiledata(uploadobject, username)) 
 		{
 			System.out.println("file added finally");
 			return Response.status(200).entity(output).build();
