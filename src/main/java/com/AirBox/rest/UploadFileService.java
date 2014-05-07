@@ -267,7 +267,7 @@ public class UploadFileService {
 			//String bucketname = dbcon.getBucketName(email);			
 			userDetailObject = dbcon.getUserDetails(email);
 			fileDetails = dbcon.getFileDetails(email);
-<<<<<<< HEAD
+
 						
 			shareperc= dbcon.getSharePerc(email);
 		
@@ -278,8 +278,7 @@ public class UploadFileService {
 			}
 			
 			session.setAttribute("shareperc", shareperc);
-=======
->>>>>>> FETCH_HEAD
+
 			
 										
 			for(int i=0; i<fileDetails.size();i++){
