@@ -54,7 +54,7 @@ public String getBucketName (String username){
         Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
         //String uname = user.getUserName();
-        query = "SELECT bucketname FROM user_details WHERE username ='"+username+"';'";
+        query = "SELECT bucketname FROM user_details WHERE username ='"+username+"';";
         //query = "INSERT into user_details (first_name, last_name, username, password,bucketname) values ('"+user.getFirstName()+"','"+user.getLastName()+"','"+user.getUserName()+"','"+user.getPassword()+"','"+user.getBucketname()+"')";
         ResultSet rs = stmt.executeQuery(query);
         //System.out.println("Bucketname for User "+user.getUserName()+" is "+);
