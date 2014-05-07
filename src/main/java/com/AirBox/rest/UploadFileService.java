@@ -271,13 +271,21 @@ public class UploadFileService {
 		//	HttpSession session= req.getSession(true);
 			session.setAttribute("fileDetails", fileDetails);
 	
-			
+			System.out.println("total percentage "+dbcon.getTotalSize(email));
+			session.setAttribute("filePercentage", dbcon.getTotalSize(email));
 			
 
 			sharefiledetails=dbcon.getShareFileDetails(email);
-			System.out.println("total percentage "+dbcon.getTotalSize(email));
-			session.setAttribute("filePercentage", dbcon.getTotalSize(email));
+			
+			for(int j=0;j<sharefiledetails.size();j++){
+				System.out.println("share name "+sharefiledetails.get(j).getUsername());
+				System.out.println("file name "+sharefiledetails.get(j).getFileName());
+			}
+			
+			session.setAttribute("history", sharefiledetails);
 
+			
+			
 			return Response.status(200).entity(output).build();
 			}
 			

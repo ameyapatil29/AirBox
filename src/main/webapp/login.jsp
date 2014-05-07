@@ -34,7 +34,7 @@ function userLogin(){
 	   var email = $('#email').val();
 	   var password = $('#password').val();
 	 
-	 alert('Username : '+email);
+	// alert('Username : '+email);
 	   
 		$.ajax({
 			url : "rest/file/login",

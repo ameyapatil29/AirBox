@@ -100,25 +100,27 @@
 					<thead>
 						<tr>
 							<th>Shared With</th>
-							<th>File Size</th>
+							<th>File Name</th>
+						
 							<th>Date Modified</th>
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="item" items="${fileDetails}">
+					<c:forEach var="item" items="${history}">
 						<tr>
+							<td>${item.getUsername()}</td>							
 							<td>${item.getFileName()}</td>
-							
-							<td>${item.getSize()}</td>
-							
+						
 							<td>${item.getDateCreated()}</td>
 						
+						<!-- 
 							<td onclick="Files('${item.getFileName()}');"><button
 									class="btn btn-primary" type="button">Download</button></td>
 							<td onclick="shareFiles('${item.getFileName()}');"><button
 									class="btn btn-success" type="button">Share</button></td>
 							<td onclick="Files('${item.getFileName()}');"><button
 									class="btn btn-danger" type="button">Delete</button></td>
+					 -->
 						</tr>
 						</c:forEach>
 					</tbody>

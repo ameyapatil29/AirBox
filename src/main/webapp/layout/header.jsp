@@ -43,7 +43,7 @@
 <div id="header">
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div id="headerNav" class="navbar-inner">
-			<a class="brand" href="/project-vars/"><span style="color: white; margin: 0px 10px 0px 10px;">AirBox</span></a>
+			<a class="brand" href="HomePage.html"><span style="color: white; margin: 0px 10px 0px 10px;">AirBox</span></a>
 			<% if(session.getAttribute("username") != null) { %>
 			<ul class="nav">
 				<li><a href="/project-vars/viewProjects.htm" style="color: white;"></a></li>
