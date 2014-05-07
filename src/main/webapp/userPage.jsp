@@ -26,12 +26,12 @@
     src="http://cdn.datatables.net/1.10.0-rc.1/js/jquery.dataTables.js"></script>	
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
-	
-	
-	<!-- <script
+
+
+<!-- <script
     src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
-   
-	
+
+
 <script type="text/javascript" src="jsbootstrap/bootstrap.js" /></script>
 <script type="text/javascript" src="jsbootstrap/bootstrap.min.js" /></script>
 <script type="text/javascript" src="jsbootstrap/bootstrap-dropdown.js" /></script>
@@ -41,7 +41,7 @@
 <script type="text/javascript" src="jsbootstrap/bootstrap-scrollspy.js" /></script>
 <script type="text/javascript" src="jsbootstrap/bootstrap-modal.js" /></script>
 
- 
+
 
 <style type="text/css">
 body {
@@ -60,8 +60,6 @@ body {
 		padding-left: 5px;
 		padding-right: 5px;
 	}
-	
-
 }
 </style>
 
@@ -92,6 +90,57 @@ function Files(file){
 	
 }
 
+var testfile;
+function shareFiles(file){
+	alert('name of the file is '+file);
+	testfile = file;
+	
+	$("#shareModal").modal('show');
+}
+function submitsharedata(){
+	alert("name of the test file is "+testfile);
+	var filetobeshared = testfile;
+	var shareemail=  $('#shareemail').val();
+	
+	alert("file shared with "+shareemail+" is "+filetobeshared);
+	/*
+	$.ajax({
+		url : "rest/file/sharelink",
+	    type: "POST",
+	    data : "shareemail=" + shareemail + "&filename=" + filetobeshared,
+	   
+	    success:function(data, textStatus, jqXHR){
+	    	alert('success');
+	    	window.location.href="userPage.jsp";
+	    },
+	    error: function(jqXHR, textStatus, errorThrown){
+	    	alert('Could not process request.. ' + errorThrown);
+	    }
+	});
+	*/
+	
+}
+
+
+function EmailVerify() {
+    var email = document.getElementById('email').value;
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var message = document.getElementById('emailMessage');
+    var badColor = "red";
+    message.style.color = badColor;
+
+    if (!filter.test(email)) {   
+       $('#emailMessage').html("Please Enter valid Email");
+       return false;
+    }else{
+       $('#emailMessage').html("");
+       $.get('/check_email?email=' + email, function(data){
+            if(data == "true")
+                $('#emailMessage').html("Email already exists");
+       });
+    }
+    return true;
+}
 
 </script>
 
@@ -100,8 +149,8 @@ function Files(file){
 
 </head>
 
-<body >
-	
+<body>
+
 
 
 
@@ -114,11 +163,11 @@ function Files(file){
 			<div class="span3">
 				<div class="well sidebar-nav">
 
-						<h4>Space Used</h4>
-						<div class="progress progress-info progress-striped">
-							<div class="bar" style="width: 83.3%"></div>
-						</div>
-						
+					<h4>Space Used</h4>
+					<div class="progress progress-info progress-striped">
+						<div class="bar" style="width: 83.3%"></div>
+					</div>
+
 				</div>
 				<!--/.well -->
 			</div>
@@ -130,10 +179,11 @@ function Files(file){
 					<div class="row">
 
 						<form class="navbar-search pull-left">
-							<input type="text" class="search-query" placeholder="Search" 
-								style="margin-left: 20px"><!-- change done on May 6 1:36pm -->
+							<input type="text" class="search-query" placeholder="Search"
+								style="margin-left: 20px">
+							<!-- change done on May 6 1:36pm -->
 						</form>
-						
+
 						<button class="btn btn-primary" type="button"
 							style="margin-left: 510px" onclick="modal()">Upload File</button>
 
@@ -141,15 +191,10 @@ function Files(file){
 							src="images/Basic-Upload-2-icon.png" />
 
 					</div>
-					<div>
-					
-					
-					
-					
-					</div>
+					<div></div>
 				</div>
 
-				<table id="example" class="table table-hover" >
+				<table id="example" class="table table-hover">
 					<thead>
 						<tr>
 							<th>File Name</th>
@@ -159,41 +204,43 @@ function Files(file){
 					</thead>
 					<tbody>
 						<tr>
-								<td >cmpe273-greensheet.docx</td>
-								<!-- ${p.developerName} -->
-								<td>PDF</td>
-								<!-- ${p.rating} -->
-								<td>2014-03-03 07:32</td>
-								<!-- ${p.date} -->
-								<td onclick="Files('cmpe273-greensheet.docx');" ><button class="btn btn-primary" type="button">Download</button></td>
-								<td><button class="btn btn-success" type="button">Share</button></td>
-							</tr>
-							
-								<!-- second row -->
-							<tr>
-								<td>CMPE 283 Final Question Answer.pdf</td>
-								<!-- ${p.developerName} -->
-								<td>PDF</td>
-								<!-- ${p.rating} -->
-								<td>2014-03-03 05:32</td>
-								<!-- ${p.date} -->
-								<td><button class="btn btn-primary" type="button">Download</button></td>
-								<td><button class="btn btn-success" type="button">Share</button></td>
-							</tr>
-							
-							<!-- Third row -->
-							<tr>
-								<td>GoldenGate.jpg</td>
-								<!-- ${p.developerName} -->
-								<td>Image</td>
-								<!-- ${p.rating} -->
-								<td>2014-04-03 06:27</td>
-								<!-- ${p.date} -->
-								<td><button class="btn btn-primary" type="button">Download</button></td>
-								<td><button class="btn btn-success" type="button">Share</button></td>
-							</tr>
+							<td>cmpe273-greensheet.docx</td>
+							<!-- ${p.developerName} -->
+							<td>PDF</td>
+							<!-- ${p.rating} -->
+							<td>2014-03-03 07:32</td>
+							<!-- ${p.date} -->
+							<td onclick="Files('cmpe273-greensheet.docx');"><button
+									class="btn btn-primary" type="button">Download</button></td>
+							<td onclick="shareFiles('cmpe273-greensheet.docx');"><button
+									class="btn btn-success" type="button">Share</button></td>
+						</tr>
 
-	
+						<!-- second row -->
+						<tr>
+							<td>CMPE 283 Final Question Answer.pdf</td>
+							<!-- ${p.developerName} -->
+							<td>PDF</td>
+							<!-- ${p.rating} -->
+							<td>2014-03-03 05:32</td>
+							<!-- ${p.date} -->
+							<td><button class="btn btn-primary" type="button">Download</button></td>
+							<td><button class="btn btn-success" type="button">Share</button></td>
+						</tr>
+
+						<!-- Third row -->
+						<tr>
+							<td>GoldenGate.jpg</td>
+							<!-- ${p.developerName} -->
+							<td>Image</td>
+							<!-- ${p.rating} -->
+							<td>2014-04-03 06:27</td>
+							<!-- ${p.date} -->
+							<td><button class="btn btn-primary" type="button">Download</button></td>
+							<td><button class="btn btn-success" type="button">Share</button></td>
+						</tr>
+
+
 					</tbody>
 
 				</table>
@@ -208,9 +255,9 @@ function Files(file){
 
 
 	</div>
-	<!-- Modal -->
-	
-						<div id="myModal" class="modal fade">
+	<!-- Modal for upload-->
+
+	<div id="myModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -228,10 +275,41 @@ function Files(file){
 						</p>
 
 						<input type="submit" value="Upload It" />
-				</form>
+					</form>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+
+
+		</div>
+
+	</div>
+
+
+	<!-- Modal for share file -->
+
+	<div id="shareModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Share your file with</h4>
+				</div>
+				<div class="modal-body">
+
+					<form action="rest/file/upload" method="post"
+						enctype="multipart/form-data">
+						<input type="email" class="form-control" id="shareemail"
+							placeholder="Your registered email" onChange="EmailVerify();">
+
+
+						
+					</form>
 				</div>
 				<div class="modal-footer">
 				
+				<input type="submit" value="Submit" onclick="submitsharedata()" />
 				</div>
 			</div>
 
@@ -239,7 +317,11 @@ function Files(file){
 		</div>
 
 	</div>
-					
+
+
+
+
+
 
 
 	<%@include file="layout/footer.jsp"%>
