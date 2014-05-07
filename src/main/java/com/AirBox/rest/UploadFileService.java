@@ -12,7 +12,9 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,7 +32,6 @@ import javax.ws.rs.core.Response;
 import com.AirBox.Dao.DbConnection;
 import com.AirBox.Domain.UploadObject;
 import com.AirBox.Domain.User;
-
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Region;
@@ -38,10 +39,8 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
-
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
-
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
@@ -128,24 +127,35 @@ public class UploadFileService {
 	@GET
     @Path("/download")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response downloadObjects(){
+    public Response downloadObjects(@Context HttpServletRequest req){
     	
     	String output="Files downloaded at location: C:/Users/Rohit/Desktop/AirBoxRepo/";
     	String downloadLocation = "C:/Users/Bhagyashree/Desktop/AirBoxRepo/";
     	AWSFacade awsFacade=new AWSFacade();
-    	output=awsFacade.downloadAllS3BucketObjects(downloadLocation);
+    	HttpSession session= req.getSession(true);
+		String username = (String) session.getAttribute("username");
+		DbConnection dbnewcon = new DbConnection();
+		String bucketname = dbnewcon.getBucketName(username);
+    	
+    	output=awsFacade.downloadAllS3BucketObjects(downloadLocation,bucketname);
     	return Response.status(200).entity(output).build();
     }  
 	
 	@GET
     @Path("/download/{objectKey}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response downloadOneObject(@PathParam("objectKey") String key){
+    public Response downloadOneObject(@PathParam("objectKey") String key,@Context HttpServletRequest req){
     	
     	String output="Files downloaded at location: C:/Users/Rohit/Desktop/AirBoxRepo/";
     	String downloadLocation = "/Users/sumantmurke/Desktop/download/";
     	AWSFacade awsFacade=new AWSFacade();
-    	output=awsFacade.downloadS3BucketObject(downloadLocation, key);
+    	
+    	HttpSession session= req.getSession(true);
+		String username = (String) session.getAttribute("username");
+		DbConnection dbnewcon = new DbConnection();
+		String bucketname = dbnewcon.getBucketName(username);
+		
+    	output=awsFacade.downloadS3BucketObject(downloadLocation, key, bucketname);
     	return Response.status(200).entity(output).build();
     }  
 	
@@ -210,7 +220,10 @@ public class UploadFileService {
 			String invalidUser = "Invalid User";
 			System.out.println("Username is: "+email);
 			DbConnection dbcon = new DbConnection();
-		
+			//List<String> userDetails = new ArrayList<String>();
+			User userDetailObject = new User();
+			List<UploadObject> fileDetails = new ArrayList<UploadObject>();
+ 		
 			if(dbcon.loginCheck(email, password))
 			{
 			output = "Login Successful for "+ email;
@@ -218,6 +231,7 @@ public class UploadFileService {
 			HttpSession session= req.getSession(true);
 			session.setAttribute("username", email);
 			session.setAttribute("sessionId", session.getId());
+<<<<<<< HEAD
 			
 			/*User user =	dbcon.getUserDetails(email);
 			user.getFirstName();
@@ -227,6 +241,11 @@ public class UploadFileService {
 			session.setAttribute("userslastname", user.getLastName());*/
 			//session.setAttribute("userspassword", user.getPassword());
 			
+=======
+			//String bucketname = dbcon.getBucketName(email);			
+			userDetailObject = dbcon.getUserDetails(email);
+			fileDetails = dbcon.getFileDetails(email);
+>>>>>>> FETCH_HEAD
 			return Response.status(200).entity(output).build();
 			}
 			
@@ -252,7 +271,7 @@ public class UploadFileService {
 			System.out.println("File name from controller - "+shareFileName);
 			HttpSession session= req.getSession(true);
 			owneremail=(String) session.getAttribute("username");
-			
+			System.out.println("owneremail from session is -" +owneremail);
 			DbConnection dbcon = new DbConnection();
 			
 			dbcon.shareFile(owneremail, shareFileName, shareemail);
@@ -280,7 +299,7 @@ public class UploadFileService {
 			as.setConnec(ui, cm);
 			return Response.status(200).entity(output).build();
 
-	}	
+	}
 
 	
 	@GET

@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+
 import com.AirBox.Domain.User;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
@@ -99,14 +100,14 @@ public class AWSFacade {
 	}
 
 	
-	public String downloadAllS3BucketObjects(String localStoragePath){
+	public String downloadAllS3BucketObjects(String localStoragePath, String bucketName){
 		String response="fail";
 		AWSCredentials myCredentials = new BasicAWSCredentials(
 				S3Config.getMyAccessId(), S3Config.getMySecretId());
 		AmazonS3 s3 = new AmazonS3Client(myCredentials);        
 		Region usWest1 = Region.getRegion(Regions.US_WEST_1);
 		s3.setRegion(usWest1);
-		String bucketName = S3Config.getMyBucketName();
+		//String bucketName = S3Config.getMyBucketName();
 		System.out.println("\nDownloading all objects...");
 
 		System.out.println("===========================================");
@@ -129,6 +130,11 @@ public class AWSFacade {
 			}
 			response="success";
 
+			
+		
+			
+			
+			
 		} catch (AmazonServiceException ase) {
 			System.out.println("Caught an AmazonServiceException, which means your request made it "
 					+ "to Amazon S3, but was rejected with an error response for some reason.");
@@ -146,15 +152,16 @@ public class AWSFacade {
 		return response;
 	}
 	
+	    
 	
-	public String downloadS3BucketObject(String localStoragePath, String key){
+	public String downloadS3BucketObject(String localStoragePath, String key, String bucketName){
 		String response="fail";
 		AWSCredentials myCredentials = new BasicAWSCredentials(
 				S3Config.getMyAccessId(), S3Config.getMySecretId());
 		AmazonS3 s3 = new AmazonS3Client(myCredentials);        
 		Region usWest1 = Region.getRegion(Regions.US_WEST_1);
 		s3.setRegion(usWest1);
-		String bucketName = S3Config.getMyBucketName();
+		//String bucketName = S3Config.getMyBucketName();
 		System.out.println("Downloading object...");
 
 		System.out.println("===========================================");
@@ -166,6 +173,7 @@ public class AWSFacade {
 				File file=new File(localStoragePath+key);
 				s3.getObject(objRequest,file);
 				s3.getObject(objRequest);
+				
 				System.out.println("Object "+ key +" downloaded to "+file.getPath());
 				System.out.println("-----------------------------------------------------------------");
 
