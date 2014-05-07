@@ -118,11 +118,10 @@ public User getUserDetails (String uname){
              userD.setUserName(username);
              userD.setPassword(password);
              userD.setBucketname(bucketname);
-        }
-        else{
+        } else{
         	return null;
-        	
         }
+       
        
     } catch (InstantiationException e) {
         e.printStackTrace();
@@ -362,7 +361,6 @@ public List<UploadObject> getSharePerc (String username){
 	String query;
 	String shareuser;
 	Long perc;
-	Date shareddate;
 	List<UploadObject> fileDetailsList = new ArrayList<UploadObject>();	
 	UploadObject fileDetailObject;
     try {
@@ -372,8 +370,7 @@ public List<UploadObject> getSharePerc (String username){
         Statement stmt = (Statement) con.createStatement();
 
         query ="SELECT t.shareuser as shareuser, ROUND((t.num/t.total)*100,0) AS perc FROM ( SELECT shareuser, count(*) num,(select count(*) from airbox.share_details where ownername ='"+ username +"' ) as total FROM airbox.share_details where ownername ='"+ username +"' group by shareuser )t;";
-
-        //query = "SELECT * FROM share_details WHERE ownername ='"+username+"';";
+        
         ResultSet rs = stmt.executeQuery(query);
        
         
