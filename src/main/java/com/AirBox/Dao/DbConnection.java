@@ -10,7 +10,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class DbConnection {
 	
@@ -79,6 +81,141 @@ public String getBucketName (String username){
 	
 }
 
+public User getUserDetails (String uname){
+	
+	String query;
+	//String bname = "nouser";
+	//List<String> nl = new ArrayList<String>();
+	String first_name, last_name,username, password, bucketname;
+	User userD = new User();
+    try {
+        Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
+        Statement stmt = (Statement) con.createStatement();
+        //String uname = user.getUserName();
+        query = "SELECT * FROM user_details WHERE username ='"+uname+"';";
+        //query = "INSERT into user_details (first_name, last_name, username, password,bucketname) values ('"+user.getFirstName()+"','"+user.getLastName()+"','"+user.getUserName()+"','"+user.getPassword()+"','"+user.getBucketname()+"')";
+        ResultSet rs = stmt.executeQuery(query);
+        //System.out.println("Bucketname for User "+user.getUserName()+" is "+);
+        /*if(rs.next()){
+        	bname = rs.getString("bucketname");
+        	//bname = (String) rs.getObject(1);
+        	
+        }else
+        	System.out.println("No user found for username = "+username+"  ");
+        System.out.println("Inside DbConnection - testing bucket name: " +bname);*/
+        //int numColumns = rs.getMetaData().getColumnCount();
+        
+        if ( rs.next() ) {
+            
+        	 first_name = rs.getString("first_name");
+        	 last_name = rs.getString("last_name");
+        	 username = rs.getString("username");
+        	 password = rs.getString("password");
+        	 bucketname = rs.getString("bucketname");
+             userD.setFirstName(first_name);
+             userD.setLastName(last_name);
+             userD.setUserName(username);
+             userD.setPassword(password);
+             userD.setBucketname(bucketname);
+        }
+       
+    } catch (InstantiationException e) {
+        e.printStackTrace();
+    } catch (IllegalAccessException e) {
+        e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    //return bname;
+    return userD;
+	
+}
+
+
+
+public List<UploadObject> getFileDetails (String uname){
+	
+	String query;
+	//String bname = "nouser";
+	String  username, filename;
+	long filesize;
+	Date date_created;
+	//List<String> nl = new ArrayList<String>();
+	List<UploadObject> fileDetailsList = new ArrayList<UploadObject>();	
+	UploadObject fileDetailObject = new UploadObject();
+    try {
+        Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
+        Statement stmt = (Statement) con.createStatement();
+        //String uname = user.getUserName();
+        query = "SELECT * FROM file_details WHERE username ='"+uname+"';";
+        //query = "INSERT into user_details (first_name, last_name, username, password,bucketname) values ('"+user.getFirstName()+"','"+user.getLastName()+"','"+user.getUserName()+"','"+user.getPassword()+"','"+user.getBucketname()+"')";
+        ResultSet rs = stmt.executeQuery(query);
+        //System.out.println("Bucketname for User "+user.getUserName()+" is "+);
+        /*if(rs.next()){
+        	bname = rs.getString("bucketname");
+        	//bname = (String) rs.getObject(1);
+        	
+        }else
+        	System.out.println("No user found for username = "+username+"  ");
+        System.out.println("Inside DbConnection - testing bucket name: " +bname);*/
+        
+        /*while ( rs.next() ) {
+            int numColumns = rs.getMetaData().getColumnCount();
+            for ( int i = 1 ; i <= numColumns ; i++ ) {
+              
+               
+               nl.add((String)rs.getObject(i));
+               System.out.println( "COLUMN " + i + " = " + rs.getObject(i) );
+            }
+        }*/
+        
+        //int numColumns = rs.getMetaData().getColumnCount();
+        rs.last();
+        int rowcount = 0;
+        rowcount = rs.getRow();
+        rs.beforeFirst();
+        
+        
+        
+        	
+        	for(int i=1;i<=rowcount;i++){
+        		
+        		
+        		username = rs.getString("username");
+        		filename = rs.getString("filename");
+        		filesize = rs.getLong("filesize");
+        		date_created =rs.getDate("date_created");
+        		fileDetailObject.setUsername(username);
+        		fileDetailObject.setFileName(filename);
+        		fileDetailObject.setSize(filesize);
+        		fileDetailObject.setDateCreated(date_created);
+        		
+        		fileDetailsList.add(fileDetailObject);
+        	}
+        
+        	
+        
+        
+       
+    } catch (InstantiationException e) {
+        e.printStackTrace();
+    } catch (IllegalAccessException e) {
+        e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    //return bname;
+    //return nl;
+    
+    return fileDetailsList;
+	
+}
 
 public void insertUser(User user){
     String query;
