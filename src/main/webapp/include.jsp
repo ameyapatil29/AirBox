@@ -4,8 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Insert title here</title>
 
 
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <link href="bootstrap/bootstrap.min.css" rel="stylesheet" media="screen"
 	type="text/css">
 <link href="bootstrap/bootstrap.css" rel="stylesheet" media="screen"
@@ -24,27 +27,14 @@
 <script type="text/javascript" src="jsbootstrap/bootstrap-scrollspy.js" /></script>
 <script type="text/javascript" src="jsbootstrap/bootstrap-modal.js" /></script>
 
-
-
+<script
+    src="http://cdn.datatables.net/1.10.0-rc.1/js/jquery.dataTables.js"></script>
+  
+  <link href="//cdn.datatables.net/1.10.0-rc.1/css/jquery.dataTables.css" rel="stylesheet"
+    media="screen" type="text/css">
 
 </head>
 <body>
 
-
-<div id="footer">
-		<div class="navbar navbar-inverse navbar-fixed-bottom">
-			<div class="navbar-inner" style="min-height: 30px;">
-				<div style="margin: 10px 5px 10px 5px; float: left;">
-					<span style="color: white;">Copyright &copy; AirBox</span>
-				</div>
-				<div style="margin: 10px 10px 10px 10px; float: right;">
-					<a href="about.htm" style="color: white;">About Us</a> <span
-						style="color: white;">|</span> <a data-toggle="modal" href="#" style="color: white;">Contact
-						Us</a> <span
-						style="color: white;">|</span><a data-toggle="modal" href="#" style="color: white;">Careers</a>
-				</div>
-			</div>
-		</div>
-	</div>
 </body>
 </html>

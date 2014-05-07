@@ -117,7 +117,7 @@ public class UploadFileService {
     public Response downloadOneObject(@PathParam("objectKey") String key){
     	
     	String output="Files downloaded at location: C:/Users/Rohit/Desktop/AirBoxRepo/";
-    	String downloadLocation = "C:/Users/Bhagyashree/Desktop/AirBoxRepo/";
+    	String downloadLocation = "/Users/sumantmurke/Desktop/download/";
     	AWSFacade awsFacade=new AWSFacade();
     	output=awsFacade.downloadS3BucketObject(downloadLocation, key);
     	return Response.status(200).entity(output).build();

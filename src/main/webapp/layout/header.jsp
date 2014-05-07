@@ -18,8 +18,13 @@
 	media="screen" type="text/css">
 <link href="bootstrap/bootstrap-responsive.min.css" rel="stylesheet"
 	media="screen" type="text/css">
+
 <script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script
+    src="http://cdn.datatables.net/1.10.0-rc.1/js/jquery.dataTables.js"></script>
+  
+	
 <script type="text/javascript" src="jsbootstrap/bootstrap.js" /></script>
 <script type="text/javascript" src="jsbootstrap/bootstrap.min.js" /></script>
 <script type="text/javascript" src="jsbootstrap/bootstrap-dropdown.js" /></script>

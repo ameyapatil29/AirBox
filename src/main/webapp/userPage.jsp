@@ -12,9 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<!-- Le styles
-    <link href="../assets/css/bootstrap.css" rel="stylesheet">
-     -->
+
 
 <link href="bootstrap/bootstrap.min.css" rel="stylesheet" media="screen"
 	type="text/css">
@@ -24,8 +22,16 @@
 	media="screen" type="text/css">
 <link href="bootstrap/bootstrap-responsive.min.css" rel="stylesheet"
 	media="screen" type="text/css">
+<!-- <script
+    src="http://cdn.datatables.net/1.10.0-rc.1/js/jquery.dataTables.js"></script>	
 <script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	
+	
+	<!-- <script
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+   
+	
 <script type="text/javascript" src="jsbootstrap/bootstrap.js" /></script>
 <script type="text/javascript" src="jsbootstrap/bootstrap.min.js" /></script>
 <script type="text/javascript" src="jsbootstrap/bootstrap-dropdown.js" /></script>
@@ -35,7 +41,7 @@
 <script type="text/javascript" src="jsbootstrap/bootstrap-scrollspy.js" /></script>
 <script type="text/javascript" src="jsbootstrap/bootstrap-modal.js" /></script>
 
-
+ 
 
 <style type="text/css">
 body {
@@ -58,25 +64,6 @@ body {
 
 }
 </style>
-<!-- 
-    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
- -->
-<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
-    <![endif]-->
-
-<!-- Fav and touch icons -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144"
-	href="../assets/ico/apple-touch-icon-144-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="114x114"
-	href="../assets/ico/apple-touch-icon-114-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="72x72"
-	href="../assets/ico/apple-touch-icon-72-precomposed.png">
-<link rel="apple-touch-icon-precomposed"
-	href="../assets/ico/apple-touch-icon-57-precomposed.png">
-<link rel="shortcut icon" href="../assets/ico/favicon.png">
-
 
 <script type="text/javascript">
 function modal() {
@@ -84,6 +71,27 @@ function modal() {
 	$("#myModal").modal('show');
 
 }
+
+function Files(file){
+	
+	alert("i am inside download"+file);
+	var uri = "rest/file/download/"+file;
+	$.ajax({
+		url : uri,
+	    type: "GET",
+	    datatype : "json",
+	   
+	    success:function(data, textStatus, jqXHR){
+	    	alert('success');
+	    	window.location.href="userPage.jsp";
+	    },
+	    error: function(jqXHR, textStatus, errorThrown){
+	    	alert('Could not process request.. ' + errorThrown);
+	    }
+	});
+	
+}
+
 
 </script>
 
@@ -141,7 +149,7 @@ function modal() {
 					</div>
 				</div>
 
-				<table   class="table table-hover"  id="example" >
+				<table id="example" class="table table-hover" >
 					<thead>
 						<tr>
 							<th>File Name</th>
@@ -151,13 +159,13 @@ function modal() {
 					</thead>
 					<tbody>
 						<tr>
-								<td>cmpe273-greensheet.docx</td>
+								<td >cmpe273-greensheet.docx</td>
 								<!-- ${p.developerName} -->
 								<td>PDF</td>
 								<!-- ${p.rating} -->
 								<td>2014-03-03 07:32</td>
 								<!-- ${p.date} -->
-								<td><button class="btn btn-primary" type="button">Download</button></td>
+								<td onclick="Files('cmpe273-greensheet.docx');" ><button class="btn btn-primary" type="button">Download</button></td>
 								<td><button class="btn btn-success" type="button">Share</button></td>
 							</tr>
 							
@@ -185,49 +193,7 @@ function modal() {
 								<td><button class="btn btn-success" type="button">Share</button></td>
 							</tr>
 
-					
-<!-- ******************************changing***************************************************************************************************************-->
-					
-					<!-- 
-						<c:forEach var="p" items="${ratings}" >
-					 -->	 	<tr>
-								<td>CMPE 273 Final Question Answer.pdf</td>
-								<!-- ${p.developerName} -->
-								<td>PDF</td>
-								<!-- ${p.rating} -->
-								<td>2014-03-03 07:32</td>
-								<!-- ${p.date} -->
-								<td><button class="btn btn-primary" type="button">Download</button></td>
-								<td><button class="btn btn-success" type="button">Share</button></td>
-							</tr>
-							<!-- second row -->
-							<tr>
-								<td>CMPE 283 Final Question Answer.pdf</td>
-								<!-- ${p.developerName} -->
-								<td>PDF</td>
-								<!-- ${p.rating} -->
-								<td>2014-03-03 05:32</td>
-								<!-- ${p.date} -->
-								<td><button class="btn btn-primary" type="button">Download</button></td>
-								<td><button class="btn btn-success" type="button">Share</button></td>
-							</tr>
-							<!-- Third row -->
-							<tr>
-								<td>GoldenGate.jpg</td>
-								<!-- ${p.developerName} -->
-								<td>Image</td>
-								<!-- ${p.rating} -->
-								<td>2014-04-03 06:27</td>
-								<!-- ${p.date} -->
-								<td><button class="btn btn-primary" type="button">Download</button></td>
-								<td><button class="btn btn-success" type="button">Share</button></td>
-							</tr>
-
- <!-- 
-						</c:forEach>
-  -->
-  <!-- ************************************************************************************************************************************************ -->
-					
+	
 					</tbody>
 
 				</table>
