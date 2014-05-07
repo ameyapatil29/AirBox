@@ -128,24 +128,39 @@ public class UploadFileService {
 	@GET
     @Path("/download")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response downloadObjects(){
-    	
+    public Response downloadObjects(@Context HttpServletRequest req){
+    	String bucketname;
+    	String username;
+
+
+		HttpSession session= req.getSession(true);
+		username=(String) session.getAttribute("username");
+    	DbConnection dbcon = new DbConnection();
+		bucketname = dbcon.getBucketName(username);
     	String output="Files downloaded at location: C:/Users/Rohit/Desktop/AirBoxRepo/";
     	String downloadLocation = "C:/Users/Bhagyashree/Desktop/AirBoxRepo/";
     	AWSFacade awsFacade=new AWSFacade();
-    	output=awsFacade.downloadAllS3BucketObjects(downloadLocation);
+    	output=awsFacade.downloadAllS3BucketObjects(downloadLocation,bucketname);
     	return Response.status(200).entity(output).build();
     }  
 	
 	@GET
     @Path("/download/{objectKey}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response downloadOneObject(@PathParam("objectKey") String key){
+    public Response downloadOneObject(@PathParam("objectKey") String key,@Context HttpServletRequest req){
     	
+		String bucketname;
+    	String username;
+
+
+		HttpSession session= req.getSession(true);
+		username=(String) session.getAttribute("username");
+    	DbConnection dbcon = new DbConnection();
+		bucketname = dbcon.getBucketName(username);
     	String output="Files downloaded at location: C:/Users/Rohit/Desktop/AirBoxRepo/";
-    	String downloadLocation = "/Users/sumantmurke/Desktop/download/";
+    	String downloadLocation = "C:/Users/Bhagyashree/Desktop/new/";
     	AWSFacade awsFacade=new AWSFacade();
-    	output=awsFacade.downloadS3BucketObject(downloadLocation, key);
+    	output=awsFacade.downloadS3BucketObject(downloadLocation, key,bucketname);
     	return Response.status(200).entity(output).build();
     }  
 	
