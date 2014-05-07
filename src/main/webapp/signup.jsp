@@ -66,7 +66,7 @@ function uploadFormData(){
 		   
 		    success:function(data, textStatus, jqXHR){
 		    	alert('success');
-		    	window.location.href="index.jsp";
+		    	window.location.href="userPage.jsp";
 		    },
 		    error: function(jqXHR, textStatus, errorThrown){
 		    	alert('Could not process request.. ' + errorThrown);

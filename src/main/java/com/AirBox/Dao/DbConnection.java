@@ -113,7 +113,7 @@ public boolean insertFiledata(UploadObject file, String username){
         Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
         
-        query1="SELECT max(no) FROM (SELECT 1048576-sum(filesize) no FROM airbox.file_details WHERE username='"+ username +"' UNION SELECT 1048576 no) t";
+        query1="SELECT max(no) FROM (SELECT 1073741824-sum(filesize) no FROM airbox.file_details WHERE username='"+ username +"' UNION SELECT 1073741824 no) t";
         
         query2 = "INSERT into file_details (username, filename, filesize, date_created) values ('"+username+"','"+file.getFileName()+"','"+filesize+"','"+dateFormat.format(date)+"')";
           
