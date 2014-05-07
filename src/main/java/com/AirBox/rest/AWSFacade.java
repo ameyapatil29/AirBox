@@ -47,13 +47,20 @@ public class AWSFacade {
 		Region usWest1 = Region.getRegion(Regions.US_WEST_1);
 		s3.setRegion(usWest1);
 		
-		String bname = user.getUserName();
-		bucket = s3.createBucket("bucket_"+bname);
+		String bname = user.getFirstName();
+		bname = bname + user.getLastName();
+		bname = bname.toLowerCase();
+		bname = "bucket." +bname;
+		System.out.println("Inside AWSFacade - makeNewBucket() - New bucket name: "+bname);
+		bucket = s3.createBucket(bname);
 		
+		user.setBucketname(bname);
 		
 		return bucket;
 	}
-	public String addS3BucketObjects( File fileobject,String filetoupload){
+	
+	
+	public String addS3BucketObjects( File fileobject,String filetoupload, String bucketName){
 		String response="fail";
 	
 		AWSCredentials myCredentials = new BasicAWSCredentials(
@@ -61,7 +68,7 @@ public class AWSFacade {
 		AmazonS3 s3 = new AmazonS3Client(myCredentials);        
 		Region usWest1 = Region.getRegion(Regions.US_WEST_1);
 		s3.setRegion(usWest1);
-		String bucketName = S3Config.getMyBucketName();
+		//String bucketName = S3Config.getMyBucketName();
 
 		System.out.println("===========================================");
 		System.out.println("      Getting Started with Amazon S3        ");

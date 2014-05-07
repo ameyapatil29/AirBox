@@ -9,6 +9,15 @@ public class User {
 	private String lastName;
 	//private String linkedInId;
 	//private String linkedInUrl;
+	private String bucketname;
+	
+	
+	public String getBucketname() {
+		return bucketname;
+	}
+	public void setBucketname(String bucketname) {
+		this.bucketname = bucketname;
+	}
 /*	
 	public String getLinkedInUrl() {
 		return linkedInUrl;

@@ -44,13 +44,49 @@ public boolean loginCheck(String username, String password){
     return login;
 }
 
+
+public String getBucketName (String username){
+	
+	String query;
+	String bname = "nouser";
+    try {
+        Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
+        Statement stmt = (Statement) con.createStatement();
+        //String uname = user.getUserName();
+        query = "SELECT bucketname FROM user_details WHERE username ='"+username+"';'";
+        //query = "INSERT into user_details (first_name, last_name, username, password,bucketname) values ('"+user.getFirstName()+"','"+user.getLastName()+"','"+user.getUserName()+"','"+user.getPassword()+"','"+user.getBucketname()+"')";
+        ResultSet rs = stmt.executeQuery(query);
+        //System.out.println("Bucketname for User "+user.getUserName()+" is "+);
+        if(rs.next()){
+        	bname = rs.getString("bucketname");
+        	//bname = (String) rs.getObject(1);
+        	
+        }else
+        	System.out.println("No user found for username = "+username+"  ");
+        System.out.println("Inside DbConnection - testing bucket name: " +bname);
+       
+    } catch (InstantiationException e) {
+        e.printStackTrace();
+    } catch (IllegalAccessException e) {
+        e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return bname;
+	
+}
+
+
 public void insertUser(User user){
     String query;
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
-        query = "INSERT into user_details (first_name, last_name, username, password) values ('"+user.getFirstName()+"','"+user.getLastName()+"','"+user.getUserName()+"','"+user.getPassword()+"')";
+        query = "INSERT into user_details (first_name, last_name, username, password, bucketname) values ('"+user.getFirstName()+"','"+user.getLastName()+"','"+user.getUserName()+"','"+user.getPassword()+"','"+user.getBucketname()+"')";
         stmt.executeUpdate(query);
         System.out.println("User Inserted successfully");
     } catch (InstantiationException e) {

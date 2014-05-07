@@ -71,12 +71,17 @@ public class UploadFileService {
 			 @FormDataParam("file") File fileobject,
 			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader,@Context HttpServletRequest req) {
 		String username;
+		String bucketname;
 		
 		HttpSession session= req.getSession(true);
 		username=(String) session.getAttribute("username");
+		
+		DbConnection dbnewcon = new DbConnection();
+		bucketname = dbnewcon.getBucketName(username);
+		
 		String invalidFile = "Invalid File";
 		AWSFacade awsFacade=new AWSFacade();
-		String output=awsFacade.addS3BucketObjects(fileobject,contentDispositionHeader.getFileName());
+		String output=awsFacade.addS3BucketObjects(fileobject,contentDispositionHeader.getFileName(),bucketname);
 		//If File Uploaded successfully then send EMail to user about the upload
 		
 		if(output.equalsIgnoreCase("success")){
@@ -84,7 +89,7 @@ public class UploadFileService {
 			String msgBody ="File upload successful";
 			String msgHeader = "AWS S3 file upload success";
 			
-			ui = new ConcreteUserInfo("chetan.burande7@gmail.com");
+			ui = new ConcreteUserInfo(username);
 			cm = new ConcreteMessage(msgBody, msgHeader);
 			as = new AmazonSESSample();
 			/*ui.setReEmail("chetan.burande7@gmail.com");
@@ -175,10 +180,12 @@ public class UploadFileService {
 			System.out.println("surname of the user is"+user.getLastName());
 			String output = "Thankyou for registring with us you will recieve email shortly "+ user.getFirstName();
 			DbConnection dbcon = new DbConnection();
-			dbcon.insertUser(user);
+			
 			System.out.println("User added");
 			
 			Bucket bucket = fact.makeNewBucket(user);
+			System.out.println("UploadFileService: After adding new bucket - "+user.getBucketname());
+			dbcon.insertUser(user);
 			
 			String msgBody ="Your account was created on AirBox.";
 			String msgHeader = "Registration Confirmation";
