@@ -166,13 +166,13 @@ function logout(){
 }
 
 
-function deleteFiles(file){
+function DeleteFiles(file){
 	
-	alert("i am inside delete "+file);
+	confirm('Are you sure you want to delete the file');
 	var uri = "rest/file/delete/"+file;
 	$.ajax({
 		url : uri,
-	    type: "GET",
+	    type: "DELETE",
 	    datatype : "json",
 	   
 	    success:function(data, textStatus, jqXHR){
@@ -180,7 +180,7 @@ function deleteFiles(file){
 	    	window.location.href="userPage.jsp";
 	    },
 	    error: function(jqXHR, textStatus, errorThrown){
-	    	alert('Could not process request.. ' + errorThrown);
+	    	//alert('Could not process request.. ' + errorThrown);
 	    }
 	});
 	
@@ -215,7 +215,7 @@ function deleteFiles(file){
 
 					<h4>Space Used</h4>
 					<div class="progress progress-info progress-striped">
-						<div class="bar" style="width: 83.3%"></div>
+						<div class="bar" style="width: ${filePercentage}%"></div>
 					</div>
 					<button class="btn btn-primary" type="button" onclick ="logout();" >Logout</button>
 					<button class="btn btn-primary" type="button" onclick="window.location.href='profile.jsp'" >Profile &raquo;</button>
@@ -249,7 +249,7 @@ function deleteFiles(file){
 					<thead>
 						<tr>
 							<th>File Name</th>
-							<th>File Size</th>
+							<th>File Size (in Mb)</th>
 							<th>Date Modified</th>
 						</tr>
 					</thead>

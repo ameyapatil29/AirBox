@@ -169,6 +169,8 @@ public class UploadFileService {
     		@PathParam("objectkey") String key){
     	AWSFacade awsFacade=new AWSFacade();
     	System.out.println("key::::::: "+key);
+    //	DbConnection dbcon = new DbConnection();
+    //	dbcon.deleteFile(key);
     	String output=awsFacade.deleteS3BucketObjects(key);
     	return Response.status(200).entity(output).build();
     }
@@ -268,6 +270,7 @@ public class UploadFileService {
 
 			sharefiledetails=dbcon.getShareFileDetails(email);
 			System.out.println("total percentage "+dbcon.getTotalSize(email));
+			session.setAttribute("filePercentage", dbcon.getTotalSize(email));
 
 			return Response.status(200).entity(output).build();
 			}

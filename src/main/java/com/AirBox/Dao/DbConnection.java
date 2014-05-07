@@ -211,7 +211,8 @@ public List<UploadObject> getFileDetails (String uname){
         		fileDetailObject = new UploadObject();
         		fileDetailObject.setUsername(username);
         		fileDetailObject.setFileName(filename);
-        		fileDetailObject.setSize(filesize);
+        		long convfileSize = filesize/1048576;
+        		fileDetailObject.setSize(convfileSize);
         		fileDetailObject.setDateCreated(date_created);
         		
         		fileDetailsList.add(fileDetailObject);
