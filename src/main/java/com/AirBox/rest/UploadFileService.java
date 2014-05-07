@@ -219,6 +219,14 @@ public class UploadFileService {
 			session.setAttribute("username", email);
 			session.setAttribute("sessionId", session.getId());
 			
+			/*User user =	dbcon.getUserDetails(email);
+			user.getFirstName();
+			System.out.println("users firsname"+user.getFirstName());
+			
+			session.setAttribute("usersfirstname", user.getFirstName());
+			session.setAttribute("userslastname", user.getLastName());*/
+			//session.setAttribute("userspassword", user.getPassword());
+			
 			return Response.status(200).entity(output).build();
 			}
 			
