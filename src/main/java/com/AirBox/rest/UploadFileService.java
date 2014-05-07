@@ -107,6 +107,7 @@ public class UploadFileService {
 		System.out.println("upload object size is "+ fileobject.length());//new
 		//System.out.println("uploaded object date created is "+ dateFormat.format(date));//new
 		DbConnection dbcon = new DbConnection();
+		dbcon.getTotalSize(username);
 		if(dbcon.insertFiledata(uploadobject, username)) 
 		{
 			System.out.println("file added finally");
@@ -223,7 +224,7 @@ public class UploadFileService {
 			//List<String> userDetails = new ArrayList<String>();
 			User userDetailObject = new User();
 			List<UploadObject> fileDetails = new ArrayList<UploadObject>();
- 		
+			List<UploadObject> sharefiledetails = new ArrayList<UploadObject>();
 			if(dbcon.loginCheck(email, password))
 			{
 			output = "Login Successful for "+ email;
@@ -234,6 +235,7 @@ public class UploadFileService {
 			//String bucketname = dbcon.getBucketName(email);			
 			userDetailObject = dbcon.getUserDetails(email);
 			fileDetails = dbcon.getFileDetails(email);
+			sharefiledetails=dbcon.getShareFileDetails(email);
 			return Response.status(200).entity(output).build();
 			}
 			
