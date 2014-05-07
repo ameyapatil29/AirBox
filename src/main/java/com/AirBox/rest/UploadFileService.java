@@ -224,13 +224,13 @@ public class UploadFileService {
 			//List<String> userDetails = new ArrayList<String>();
 			User userDetailObject = new User();
 			List<UploadObject> fileDetails = new ArrayList<UploadObject>();
-<<<<<<< HEAD
+
 			//System.out.println("");
 			
 
-=======
+
 			List<UploadObject> sharefiledetails = new ArrayList<UploadObject>();
->>>>>>> FETCH_HEAD
+
 			if(dbcon.loginCheck(email, password))
 			{
 			output = "Login Successful for "+ email;
@@ -252,7 +252,7 @@ public class UploadFileService {
 			//String bucketname = dbcon.getBucketName(email);			
 			userDetailObject = dbcon.getUserDetails(email);
 			fileDetails = dbcon.getFileDetails(email);
-<<<<<<< HEAD
+
 			
 			for(int i=0; i<fileDetails.size();i++){
 				System.out.println("first object upload object "+fileDetails.get(i).getFileName());
@@ -263,13 +263,10 @@ public class UploadFileService {
 	
 			
 			
-=======
-<<<<<<< HEAD
+
 			sharefiledetails=dbcon.getShareFileDetails(email);
-=======
->>>>>>> FETCH_HEAD
->>>>>>> 7cd22682d39b59989fcdcf04a4f2388ac89897a8
->>>>>>> FETCH_HEAD
+
+
 			return Response.status(200).entity(output).build();
 			}
 			

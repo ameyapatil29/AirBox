@@ -146,11 +146,11 @@ public List<UploadObject> getFileDetails (String uname){
 	Date date_created;
 	//List<String> nl = new ArrayList<String>();
 	List<UploadObject> fileDetailsList = new ArrayList<UploadObject>();	
-<<<<<<< HEAD
+
 	UploadObject fileDetailObject ;
-=======
-	UploadObject fileDetailObject;
->>>>>>> FETCH_HEAD
+
+	
+
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
@@ -182,20 +182,19 @@ public List<UploadObject> getFileDetails (String uname){
         /*rs.last();
         int rowcount = 0;
         rowcount = rs.getRow();
-<<<<<<< HEAD
+
         System.out.println("row count "+rowcount);
         rs.beforeFirst();*/
         
        // DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //Date date = new Date();
         //System.out.println(dateFormat.format(date));
-        
+        /*
         	
-=======
+
         rs.beforeFirst();*/
         
-     
->>>>>>> FETCH_HEAD
+
         	while(rs.next()){
         		
         		
@@ -206,10 +205,9 @@ public List<UploadObject> getFileDetails (String uname){
         		filesize = rs.getLong("filesize");
         		System.out.println("filesize "+filesize);
         		date_created =rs.getDate("date_created");
-<<<<<<< HEAD
+
         		System.out.println("date "+date_created);
-=======
->>>>>>> FETCH_HEAD
+
         		fileDetailObject = new UploadObject();
         		fileDetailObject.setUsername(username);
         		fileDetailObject.setFileName(filename);
