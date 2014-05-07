@@ -17,11 +17,6 @@ public static String getMySecretId() {
 	return mySecretId;
 }
 
-public static String getMyBucketName() {
-	myBucketName= "ameyapatil";
-	return myBucketName;
-}
-
 
 	
 }

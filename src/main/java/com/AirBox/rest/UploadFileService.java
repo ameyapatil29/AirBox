@@ -30,10 +30,7 @@ import javax.ws.rs.core.Response;
 import com.AirBox.Dao.DbConnection;
 import com.AirBox.Domain.UploadObject;
 import com.AirBox.Domain.User;
-<<<<<<< HEAD
-=======
 
->>>>>>> 024ba510fb54f1e2544ec1e50f8a259c864645ea
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Region;
@@ -41,13 +38,10 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
-<<<<<<< HEAD
-import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
-=======
 
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 
->>>>>>> 024ba510fb54f1e2544ec1e50f8a259c864645ea
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
@@ -233,18 +227,20 @@ public class UploadFileService {
 	public Response shareEmail(@FormParam("shareemail") String shareemail, 
 			@FormParam("filename") String filename, 
 			@Context HttpServletRequest req) {
-			String shareFilNname = "";
+			String shareFileName = "";
 			String owneremail = "";
 			String output = "success";
+			shareFileName = filename;
 			System.out.println("Link will be shared with : "+shareemail);
+			System.out.println("File name from controller - "+shareFileName);
 			HttpSession session= req.getSession(true);
 			owneremail=(String) session.getAttribute("username");
 			
 			DbConnection dbcon = new DbConnection();
 			
-			dbcon.shareFile(owneremail, filename, shareemail);
+			dbcon.shareFile(owneremail, shareFileName, shareemail);
 			// Sending email to user
-			String ownermsgBody ="You have shared a file - "+filename+" with - "+shareemail;
+			String ownermsgBody ="You have shared a file - "+shareFileName+" with - "+shareemail;
 			String ownermsgHeader = "File sharing successful";
 			String fileLink = "";
 			ui = new ConcreteUserInfo(owneremail);
@@ -252,31 +248,17 @@ public class UploadFileService {
 			as = new AmazonSESSample();
 			as.setConnec(ui, cm);
 			// Sending email notification to file receiver
+			
 			AWSFacade awsFacade=new AWSFacade();
-			fileLink = awsFacade.getShareLink(filename);
-			String receivermsgBody =owneremail+ " has shared a file - "+filename+" with you. The link for the file is - "+fileLink;
+			fileLink = awsFacade.getShareLink(shareFileName);
+			System.out.println("Link genetated - "+fileLink);
+			String receivermsgBody =owneremail+ " has shared a file - "+shareFileName+" with you. The link for the file is - "+fileLink;
 			String receivermsgHeader = "File sharing successful";
 			
 			ui = new ConcreteUserInfo(shareemail);
 			cm = new ConcreteMessage(receivermsgBody, receivermsgHeader);
 			as = new AmazonSESSample();
 			as.setConnec(ui, cm);
-		
-			/*if(dbcon.loginCheck(email, password))
-			{
-			output = "Login Successful for "+ email;
-			System.out.println("User Validated");
-			HttpSession session= req.getSession(true);
-			session.setAttribute("username", email);
-			session.setAttribute("sessionId", session.getId());
-			
-			return Response.status(200).entity(output).build();
-			}
-			
-			else
-				System.out.println("Invalid email");
-				return Response.status(400).entity(invalidUser).build();
-			*/
 			return Response.status(200).entity(output).build();
 
 	}	

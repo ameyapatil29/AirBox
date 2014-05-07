@@ -17,7 +17,7 @@ public static final String getMySecretId() {
 }
 
 public static final String getMyBucketName() {
-	myBucketName= "cmpe273";
+	myBucketName= "";
 	return myBucketName;
 }
 

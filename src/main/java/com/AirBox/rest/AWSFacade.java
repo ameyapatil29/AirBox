@@ -300,12 +300,14 @@ public class AWSFacade {
 			 AmazonS3 s3 = new AmazonS3Client(myCredentials);
 			 //String bucketName = S3Config.getMyBucketName();
 			 String fname = fileName;
+			 System.out.println("File name - "+ fileName);
+			 
 			 String fileLink = "";
 			 try{
-			 GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest("chetanchitamrel", fname);
+			 GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(S3Config.getMyBucketName(), fname);
 			 URL url = s3.generatePresignedUrl(request);
 			 fileLink = url.toString();
-			 System.out.println("File link - " + fileLink);
+			 System.out.println("File link from Facade - " + fileLink);
 			 
 			 } catch (AmazonServiceException exception) {
 					System.out.println("Caught an AmazonServiceException, " +
