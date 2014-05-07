@@ -108,15 +108,18 @@ public boolean insertFiledata(UploadObject file, String username){
     
 }
 
-public void shareFile(String sharedfilename, String shareUser, String owner){
+public void shareFile(String username, String filename, String shareemail){
     String query;
+    String uname = username;
+    String fname = filename;
+    String smail = shareemail;
 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	Date date = new Date();
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
-        query = "INSERT into share_details (owenername, shareuser, filename, date_created) values ('"+owner+"','"+shareUser+"','"+sharedfilename+"','"+dateFormat.format(date)+"')";
+        query = "INSERT into share_details (owenername, shareuser, filename, date_created) values ('"+uname+"','"+smail+"','"+fname+"','"+dateFormat.format(date)+"')";
         System.out.println("file inserted in db");
         stmt.executeUpdate(query);
     } catch (InstantiationException e) {
@@ -129,7 +132,6 @@ public void shareFile(String sharedfilename, String shareUser, String owner){
         e.printStackTrace();
     }
 }
-
 public void deleteFile(UploadObject file){
 	String query;
     try {
