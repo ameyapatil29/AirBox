@@ -249,6 +249,8 @@ public class UploadFileService {
 	public Response shareEmail(@FormParam("shareemail") String shareemail, 
 			@FormParam("filename") String filename, 
 			@Context HttpServletRequest req) {
+			String username;
+			String bucketname;
 			String shareFileName = "";
 			String owneremail = "";
 			String output = "success";
@@ -257,7 +259,7 @@ public class UploadFileService {
 			System.out.println("File name from controller - "+shareFileName);
 			HttpSession session= req.getSession(true);
 			owneremail=(String) session.getAttribute("username");
-			
+			System.out.println("owneremail from session is -" +owneremail);
 			DbConnection dbcon = new DbConnection();
 			
 			dbcon.shareFile(owneremail, shareFileName, shareemail);
@@ -272,7 +274,9 @@ public class UploadFileService {
 			// Sending email notification to file receiver
 			
 			AWSFacade awsFacade=new AWSFacade();
-			fileLink = awsFacade.getShareLink(shareFileName);
+			DbConnection dbnewcon = new DbConnection();
+			bucketname = dbnewcon.getBucketName(owneremail);
+			fileLink = awsFacade.getShareLink(bucketname,shareFileName);
 			System.out.println("Link genetated - "+fileLink);
 			String receivermsgBody =owneremail+ " has shared a file - "+shareFileName+" with you. The link for the file is - "+fileLink;
 			String receivermsgHeader = "File sharing successful";
@@ -283,7 +287,7 @@ public class UploadFileService {
 			as.setConnec(ui, cm);
 			return Response.status(200).entity(output).build();
 
-	}	
+	}
 
 	
 	@GET
