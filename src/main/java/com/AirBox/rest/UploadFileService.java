@@ -267,7 +267,7 @@ public class UploadFileService {
 			
 
 			sharefiledetails=dbcon.getShareFileDetails(email);
-
+			System.out.println("total percentage "+dbcon.getTotalSize(email));
 
 			return Response.status(200).entity(output).build();
 			}
