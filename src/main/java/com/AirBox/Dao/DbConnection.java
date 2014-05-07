@@ -420,13 +420,13 @@ public void shareFile(String username, String filename, String shareemail){
         e.printStackTrace();
     }
 }
-public void deleteFile(UploadObject file){
+public void deleteFile(String username, String filename){
 	String query;
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
-        query = "delete from file_details WHERE username='" + file.getUsername() + "' AND filename='" + file.getFileName() + "'";
+        query = "delete from file_details WHERE username='" + username + "' AND filename='" + filename + "'";
         stmt.executeUpdate(query);
     } catch (InstantiationException e) {
         e.printStackTrace();
