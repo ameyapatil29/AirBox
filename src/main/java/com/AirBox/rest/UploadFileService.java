@@ -232,10 +232,25 @@ public class UploadFileService {
 			HttpSession session= req.getSession(true);
 			session.setAttribute("username", email);
 			session.setAttribute("sessionId", session.getId());
+<<<<<<< HEAD
+			
+			/*User user =	dbcon.getUserDetails(email);
+			user.getFirstName();
+			System.out.println("users firsname"+user.getFirstName());
+			
+			session.setAttribute("usersfirstname", user.getFirstName());
+			session.setAttribute("userslastname", user.getLastName());*/
+			//session.setAttribute("userspassword", user.getPassword());
+			
+=======
 			//String bucketname = dbcon.getBucketName(email);			
 			userDetailObject = dbcon.getUserDetails(email);
 			fileDetails = dbcon.getFileDetails(email);
+<<<<<<< HEAD
 			sharefiledetails=dbcon.getShareFileDetails(email);
+=======
+>>>>>>> FETCH_HEAD
+>>>>>>> 7cd22682d39b59989fcdcf04a4f2388ac89897a8
 			return Response.status(200).entity(output).build();
 			}
 			

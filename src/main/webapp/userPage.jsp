@@ -193,6 +193,7 @@ function logout(){
 						<div class="bar" style="width: 83.3%"></div>
 					</div>
 					<button class="btn btn-primary" type="button" onclick ="logout();" >Logout</button>
+					<button class="btn btn-primary" type="button" onclick="window.location.href='profile.jsp'" >Profile</button>
 				</div>
 				<!--/.well -->
 			</div>
@@ -210,7 +211,7 @@ function logout(){
 						</form>
 
 						<button class="btn btn-primary" type="button"
-							style="margin-left: 510px" onclick="modal()">Upload File</button>
+							style="margin-left: 480px" onclick="modal()">Upload File</button>
 
 						<input type="image" id="myimage"
 							src="images/Basic-Upload-2-icon.png" />
