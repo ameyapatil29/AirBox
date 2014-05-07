@@ -118,6 +118,8 @@ public User getUserDetails (String uname){
              userD.setUserName(username);
              userD.setPassword(password);
              userD.setBucketname(bucketname);
+        } else{
+        	return null;
         }
         else{
         	return null;
