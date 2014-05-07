@@ -121,10 +121,7 @@ public User getUserDetails (String uname){
         } else{
         	return null;
         }
-        else{
-        	return null;
-        	
-        }
+       
        
     } catch (InstantiationException e) {
         e.printStackTrace();
