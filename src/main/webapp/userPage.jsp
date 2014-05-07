@@ -22,14 +22,9 @@
 	media="screen" type="text/css">
 <link href="bootstrap/bootstrap-responsive.min.css" rel="stylesheet"
 	media="screen" type="text/css">
-<!-- <script
-    src="http://cdn.datatables.net/1.10.0-rc.1/js/jquery.dataTables.js"></script>	
+
 <script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
-
-
-<!-- <script
-    src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
 
 
 <script type="text/javascript" src="jsbootstrap/bootstrap.js" /></script>
@@ -142,6 +137,36 @@ function EmailVerify() {
     return true;
 }
 
+
+function logout(){
+	
+	alert("i am inside logut");
+
+	$.ajax({
+		url : "rest/file/logout",
+	    type: "GET",
+	    datatype : "text",
+	   
+	    success:function(data, textStatus, jqXHR){
+	    	alert('success');
+	    	window.location.href="HomePage.html";
+	    },
+	    error: function(jqXHR, textStatus, errorThrown){
+	    	alert('Could not process request.. ' + errorThrown);
+	    }
+	});
+	
+}
+
+
+
+
+
+
+
+
+
+
 </script>
 
 
@@ -167,7 +192,7 @@ function EmailVerify() {
 					<div class="progress progress-info progress-striped">
 						<div class="bar" style="width: 83.3%"></div>
 					</div>
-
+					<button class="btn btn-primary" type="button" onclick ="logout();" >Logout</button>
 				</div>
 				<!--/.well -->
 			</div>

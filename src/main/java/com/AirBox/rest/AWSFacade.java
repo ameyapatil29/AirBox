@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+
 import com.AirBox.Domain.User;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
@@ -129,6 +130,11 @@ public class AWSFacade {
 			}
 			response="success";
 
+			
+		
+			
+			
+			
 		} catch (AmazonServiceException ase) {
 			System.out.println("Caught an AmazonServiceException, which means your request made it "
 					+ "to Amazon S3, but was rejected with an error response for some reason.");
@@ -146,6 +152,7 @@ public class AWSFacade {
 		return response;
 	}
 	
+	    
 	
 	public String downloadS3BucketObject(String localStoragePath, String key, String bucketName){
 		String response="fail";
@@ -166,6 +173,7 @@ public class AWSFacade {
 				File file=new File(localStoragePath+key);
 				s3.getObject(objRequest,file);
 				s3.getObject(objRequest);
+				
 				System.out.println("Object "+ key +" downloaded to "+file.getPath());
 				System.out.println("-----------------------------------------------------------------");
 
@@ -301,17 +309,17 @@ public class AWSFacade {
 		        }
 		        System.out.println();
 		    }
-		 public String getShareLink(String fileName){
+		 public String getShareLink(String bucketname, String fileName){
 			 AWSCredentials myCredentials = new BasicAWSCredentials(
 					 S3Config.getMyAccessId(), S3Config.getMySecretId());
 			 AmazonS3 s3 = new AmazonS3Client(myCredentials);
-			 //String bucketName = S3Config.getMyBucketName();
+			 String bucketName = bucketname;
 			 String fname = fileName;
 			 System.out.println("File name - "+ fileName);
 			 
 			 String fileLink = "";
 			 try{
-			 GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(S3Config.getMyBucketName(), fname);
+			 GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucketName, fname);
 			 URL url = s3.generatePresignedUrl(request);
 			 fileLink = url.toString();
 			 System.out.println("File link from Facade - " + fileLink);
