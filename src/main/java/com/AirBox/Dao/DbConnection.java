@@ -138,6 +138,7 @@ public User getUserDetails (String uname){
 
 public List<UploadObject> getFileDetails (String uname){
 	
+	
 	String query;
 	//String bname = "nouser";
 	String  username, filename;
@@ -145,7 +146,11 @@ public List<UploadObject> getFileDetails (String uname){
 	Date date_created;
 	//List<String> nl = new ArrayList<String>();
 	List<UploadObject> fileDetailsList = new ArrayList<UploadObject>();	
+<<<<<<< HEAD
 	UploadObject fileDetailObject ;
+=======
+	UploadObject fileDetailObject;
+>>>>>>> FETCH_HEAD
     try {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
@@ -154,7 +159,7 @@ public List<UploadObject> getFileDetails (String uname){
         query = "SELECT * FROM file_details WHERE username ='"+uname+"';";
         //query = "INSERT into user_details (first_name, last_name, username, password,bucketname) values ('"+user.getFirstName()+"','"+user.getLastName()+"','"+user.getUserName()+"','"+user.getPassword()+"','"+user.getBucketname()+"')";
         ResultSet rs = stmt.executeQuery(query);
-        //System.out.println("Bucketname for User "+user.getUserName()+" is "+);
+        System.out.println("Bucketname for User ");
         /*if(rs.next()){
         	bname = rs.getString("bucketname");
         	//bname = (String) rs.getObject(1);
@@ -177,6 +182,7 @@ public List<UploadObject> getFileDetails (String uname){
         /*rs.last();
         int rowcount = 0;
         rowcount = rs.getRow();
+<<<<<<< HEAD
         System.out.println("row count "+rowcount);
         rs.beforeFirst();*/
         
@@ -185,6 +191,11 @@ public List<UploadObject> getFileDetails (String uname){
         //System.out.println(dateFormat.format(date));
         
         	
+=======
+        rs.beforeFirst();*/
+        
+     
+>>>>>>> FETCH_HEAD
         	while(rs.next()){
         		
         		
@@ -195,12 +206,72 @@ public List<UploadObject> getFileDetails (String uname){
         		filesize = rs.getLong("filesize");
         		System.out.println("filesize "+filesize);
         		date_created =rs.getDate("date_created");
+<<<<<<< HEAD
         		System.out.println("date "+date_created);
+=======
+>>>>>>> FETCH_HEAD
         		fileDetailObject = new UploadObject();
         		fileDetailObject.setUsername(username);
         		fileDetailObject.setFileName(filename);
         		fileDetailObject.setSize(filesize);
         		fileDetailObject.setDateCreated(date_created);
+        		
+        		fileDetailsList.add(fileDetailObject);
+        	}
+        
+        	
+       
+    } catch (InstantiationException e) {
+        e.printStackTrace();
+    } catch (IllegalAccessException e) {
+        e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    //return bname;
+    //return nl;
+    
+    return fileDetailsList;
+	
+}
+
+
+public List<UploadObject> getShareFileDetails (String username){
+	
+	
+	String query;
+	String filename;
+	String shareuser;
+	long filesize;
+	Date shareddate;
+	List<UploadObject> fileDetailsList = new ArrayList<UploadObject>();	
+	UploadObject fileDetailObject;
+    try {
+    	
+        Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
+        Statement stmt = (Statement) con.createStatement();
+        query = "SELECT * FROM share_details WHERE ownername ='"+username+"';";
+        ResultSet rs = stmt.executeQuery(query);
+        /*rs.last();
+        int rowcount = 0;
+        rowcount = rs.getRow();
+        rs.beforeFirst();*/
+        
+       while(rs.next()){
+        		
+        		
+        		username = rs.getString("ownername");
+        		shareuser = rs.getString("shareuser");
+        		filename = rs.getString("filename");
+        		shareddate =rs.getDate("shareddate");
+        		fileDetailObject = new UploadObject();
+        		fileDetailObject.setUsername(username);
+        		fileDetailObject.setFileName(filename);
+        		fileDetailObject.setUsername(shareuser);
+        		fileDetailObject.setDateCreated(shareddate);
         		
         		fileDetailsList.add(fileDetailObject);
         	}
@@ -218,12 +289,47 @@ public List<UploadObject> getFileDetails (String uname){
     } catch (SQLException e) {
         e.printStackTrace();
     }
-    //return bname;
-    //return nl;
+    
     
     return fileDetailsList;
 	
 }
+
+
+public String getTotalSize (String username){
+	
+	String query;
+	String totalSize=null ;
+    try {
+        Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
+        Statement stmt = (Statement) con.createStatement();
+
+        query = "select * from (SELECT (sum(filesize)/1073741824) *100 as num FROM airbox.file_details where username='"+ username +"' UNION SELECT 1073741824 as num) t where t.num is not null limit 1";
+
+       System.out.println("sharefile"); 
+        ResultSet rs = stmt.executeQuery(query);
+        
+        while(rs.next()){
+        	totalSize = (rs.getString(1));
+        	
+        }
+       
+        System.out.println("The total size of bucket of username = "+username+" is" + totalSize  );
+       
+    } catch (InstantiationException e) {
+        e.printStackTrace();
+    } catch (IllegalAccessException e) {
+        e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return totalSize;
+	
+}
+
 
 public void insertUser(User user){
     String query;
@@ -258,7 +364,7 @@ public boolean insertFiledata(UploadObject file, String username){
         Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
         
-        query1="SELECT max(no) FROM (SELECT 1073741824-sum(filesize) no FROM airbox.file_details WHERE username='"+ username +"' UNION SELECT 1073741824 no) t";
+        query1="SELECT * FROM (SELECT 1073741824-sum(filesize) as num FROM airbox.file_details WHERE username='"+ username +"' UNION SELECT 1073741824 as num) t where t.num is not null limit 1";
         
         query2 = "INSERT into file_details (username, filename, filesize, date_created) values ('"+username+"','"+file.getFileName()+"','"+filesize+"','"+dateFormat.format(date)+"')";
           
