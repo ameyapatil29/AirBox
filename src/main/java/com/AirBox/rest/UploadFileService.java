@@ -234,6 +234,8 @@ public class UploadFileService {
 	public Response shareEmail(@FormParam("shareemail") String shareemail, 
 			@FormParam("filename") String filename, 
 			@Context HttpServletRequest req) {
+			String username;
+			String bucketname;
 			String shareFileName = "";
 			String owneremail = "";
 			String output = "success";
@@ -257,7 +259,9 @@ public class UploadFileService {
 			// Sending email notification to file receiver
 			
 			AWSFacade awsFacade=new AWSFacade();
-			fileLink = awsFacade.getShareLink(shareFileName);
+			DbConnection dbnewcon = new DbConnection();
+			bucketname = dbnewcon.getBucketName(owneremail);
+			fileLink = awsFacade.getShareLink(bucketname,shareFileName);
 			System.out.println("Link genetated - "+fileLink);
 			String receivermsgBody =owneremail+ " has shared a file - "+shareFileName+" with you. The link for the file is - "+fileLink;
 			String receivermsgHeader = "File sharing successful";

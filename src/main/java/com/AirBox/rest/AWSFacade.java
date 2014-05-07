@@ -301,17 +301,17 @@ public class AWSFacade {
 		        }
 		        System.out.println();
 		    }
-		 public String getShareLink(String fileName){
+		 public String getShareLink(String bucketname, String fileName){
 			 AWSCredentials myCredentials = new BasicAWSCredentials(
 					 S3Config.getMyAccessId(), S3Config.getMySecretId());
 			 AmazonS3 s3 = new AmazonS3Client(myCredentials);
-			 //String bucketName = S3Config.getMyBucketName();
+			 String bucketName = bucketname;
 			 String fname = fileName;
 			 System.out.println("File name - "+ fileName);
 			 
 			 String fileLink = "";
 			 try{
-			 GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(S3Config.getMyBucketName(), fname);
+			 GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucketName, fname);
 			 URL url = s3.generatePresignedUrl(request);
 			 fileLink = url.toString();
 			 System.out.println("File link from Facade - " + fileLink);
