@@ -229,11 +229,13 @@ function DeleteFiles(file){
 
 					<div class="row">
 
-						<form class="navbar-search pull-left">
+						<!-- <form class="navbar-search pull-left">
 							<input type="text" class="search-query" placeholder="Search"
-								style="margin-left: 20px">
+								style="margin-left: 20px"></form>
 							<!-- change done on May 6 1:36pm -->
-						</form>
+						 
+						
+						
 
 						<button class="btn btn-primary" type="button"
 							style="margin-left: 447px" onclick="modal()">Upload File</button>
@@ -273,7 +275,7 @@ function DeleteFiles(file){
 					</tbody>
 					 
 				</table>
-				<button class="btn btn-primary" type="button">Download All</button>
+				<!--<button class="btn btn-primary" type="button">Download All</button> -->
 
 
 			</div>

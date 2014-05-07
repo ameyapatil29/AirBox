@@ -238,13 +238,13 @@ public class UploadFileService {
 			System.out.println("Username is: "+email);
 			DbConnection dbcon = new DbConnection();
 			//List<String> userDetails = new ArrayList<String>();
-			dbcon.getSharePerc(email);
+			
 						User userDetailObject = new User();
 			List<UploadObject> fileDetails = new ArrayList<UploadObject>();
-
-			List<UploadObject> sharefiledetails = new ArrayList<UploadObject>();
-
 			List<UploadObject> shareperc = new ArrayList<UploadObject>();
+			List<UploadObject> sharefiledetails = new ArrayList<UploadObject>();
+			
+			
 			
 			if(dbcon.loginCheck(email, password))
 			{
@@ -267,11 +267,10 @@ public class UploadFileService {
 			//String bucketname = dbcon.getBucketName(email);			
 			userDetailObject = dbcon.getUserDetails(email);
 			fileDetails = dbcon.getFileDetails(email);
-						
-			shareperc= dbcon.getSharePerc(email);
 			
-				for(int i=0; i<fileDetails.size();i++){
-				System.out.println("first object upload object "+fileDetails.get(i).getFileName());
+										
+			for(int i=0; i<fileDetails.size();i++){
+			System.out.println("first object upload object "+fileDetails.get(i).getFileName());
 				
 			}
 		//	HttpSession session= req.getSession(true);
@@ -281,8 +280,20 @@ public class UploadFileService {
 			session.setAttribute("filePercentage", dbcon.getTotalSize(email));
 			
 
+			if (dbcon.shareCheck(email))
+			{
+									
+			shareperc= dbcon.getSharePerc(email);
 			sharefiledetails=dbcon.getShareFileDetails(email);
 			
+			}
+			else
+				
+			{
+				shareperc=null;
+				sharefiledetails= null;
+			
+			}
 			for(int j=0;j<sharefiledetails.size();j++){
 				System.out.println("share name "+sharefiledetails.get(j).getUsername());
 				System.out.println("file name "+sharefiledetails.get(j).getFileName());
