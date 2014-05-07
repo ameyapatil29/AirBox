@@ -8,7 +8,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 
-
+<script
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 <link href="bootstrap/bootstrap.min.css" rel="stylesheet" media="screen"
 	type="text/css">
@@ -19,10 +20,8 @@
 <link href="bootstrap/bootstrap-responsive.min.css" rel="stylesheet"
 	media="screen" type="text/css">
 
-<script
-    src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script
-    src="http://cdn.datatables.net/1.10.0-rc.1/js/jquery.dataTables.js"></script>
+
+  
   
 	
 <script type="text/javascript" src="jsbootstrap/bootstrap.js" /></script>

@@ -47,6 +47,7 @@ function userLogin(){
 		    },
 		    error: function(jqXHR, textStatus, errorThrown){
 		    	alert('Could not process request.. ' + errorThrown);
+		    	window.location.href="login.jsp";
 		    }
 		});
 }
