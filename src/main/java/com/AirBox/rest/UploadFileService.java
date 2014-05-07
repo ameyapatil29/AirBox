@@ -80,7 +80,7 @@ public class UploadFileService {
 		
 		String invalidFile = "Invalid File";
 		AWSFacade awsFacade=new AWSFacade();
-		String output=awsFacade.addS3BucketObjects(fileobject,contentDispositionHeader.getFileName(),bucketname);
+		String output = "";
 		//If File Uploaded successfully then send EMail to user about the upload
 		
 		if(output.equalsIgnoreCase("success")){
@@ -110,7 +110,8 @@ public class UploadFileService {
 		dbcon.getTotalSize(username);
 		if(dbcon.insertFiledata(uploadobject, username)) 
 		{
-			System.out.println("file added finally");
+			System.out.println("file added to S3 after db insertion");
+			output=awsFacade.addS3BucketObjects(fileobject,contentDispositionHeader.getFileName(),bucketname);
 			return Response.status(200).entity(output).build();
 			}
 			
@@ -207,6 +208,7 @@ public class UploadFileService {
 			session.setAttribute("username", email);
 			session.setAttribute("sessionId", session.getId());
 			session.setAttribute("usersfirstname", fname);
+			session.setAttribute("userslastname", lname);
 			
 			System.out.println("User added");
 			
@@ -239,8 +241,8 @@ public class UploadFileService {
 			DbConnection dbcon = new DbConnection();
 			//List<String> userDetails = new ArrayList<String>();
 			
-						User userDetailObject = new User();
-			List<UploadObject> fileDetails = new ArrayList<UploadObject>();
+			User userDetailObject = new User();
+			//List<UploadObject> fileDetails = new ArrayList<UploadObject>();
 			List<UploadObject> shareperc = new ArrayList<UploadObject>();
 			List<UploadObject> sharefiledetails = new ArrayList<UploadObject>();
 			
@@ -265,10 +267,10 @@ public class UploadFileService {
 			
 
 			//String bucketname = dbcon.getBucketName(email);			
-			userDetailObject = dbcon.getUserDetails(email);
-			fileDetails = dbcon.getFileDetails(email);
+			//userDetailObject = dbcon.getUserDetails(email);
+			//fileDetails = dbcon.getFileDetails(email);
 
-						
+			/*			
 			shareperc= dbcon.getSharePerc(email);
 		
 			for(int l=0; l<shareperc.size();l++){
@@ -281,17 +283,17 @@ public class UploadFileService {
 
 			
 										
-			for(int i=0; i<fileDetails.size();i++){
-			System.out.println("first object upload object "+fileDetails.get(i).getFileName());
+			//for(int i=0; i<fileDetails.size();i++){
+			//System.out.println("first object upload object "+fileDetails.get(i).getFileName());
 				
-			}
+			//}
 		//	HttpSession session= req.getSession(true);
-			session.setAttribute("fileDetails", fileDetails);
+			//session.setAttribute("fileDetails", fileDetails);
 	
-			System.out.println("total percentage "+dbcon.getTotalSize(email));
-			session.setAttribute("filePercentage", dbcon.getTotalSize(email));
+			//System.out.println("total percentage "+dbcon.getTotalSize(email));
+			//session.setAttribute("filePercentage", dbcon.getTotalSize(email));
 			
-
+			//Added by Sumant
 			if (dbcon.shareCheck(email))
 			{
 									
@@ -312,7 +314,7 @@ public class UploadFileService {
 			}
 			
 			session.setAttribute("history", sharefiledetails);
-
+*/
 			
 			
 			return Response.status(200).entity(output).build();
@@ -320,11 +322,82 @@ public class UploadFileService {
 			
 			else
 				System.out.println("User Invalid");
-				return Response.status(400).entity(invalidUser).build();
-			
+				return Response.status(400).entity(invalidUser).build();	
 
 	}
-	
+	@GET
+	@Path("/refresh")
+	public Response pageRefresh(@Context HttpServletRequest req) {
+		User userDetailObject = new User();
+		List<UploadObject> fileDetails = new ArrayList<UploadObject>();
+		List<UploadObject> sharefiledetails = new ArrayList<UploadObject>();
+		List<UploadObject> shareperc = new ArrayList<UploadObject>();
+		DbConnection dbcon = new DbConnection();
+		HttpSession session= req.getSession(true);
+		String email=(String)session.getAttribute("username");
+		
+		userDetailObject = dbcon.getUserDetails(email);
+		fileDetails = dbcon.getFileDetails(email);
+
+		shareperc= dbcon.getSharePerc(email);
+		
+		for(int l=0; l<shareperc.size();l++){
+			System.out.println("shareperc sharename "+shareperc.get(l).getUsername());
+			System.out.println("shareperc filesize "+shareperc.get(l).getSize());
+			
+		}
+		
+		session.setAttribute("shareperc", shareperc);
+
+		
+									
+		//for(int i=0; i<fileDetails.size();i++){
+		//System.out.println("first object upload object "+fileDetails.get(i).getFileName());
+			
+		//}
+	//	HttpSession session= req.getSession(true);
+		//session.setAttribute("fileDetails", fileDetails);
+
+		//System.out.println("total percentage "+dbcon.getTotalSize(email));
+		//session.setAttribute("filePercentage", dbcon.getTotalSize(email));
+		
+		//Added by Sumant
+		if (dbcon.shareCheck(email))
+		{
+								
+		shareperc= dbcon.getSharePerc(email);
+		sharefiledetails=dbcon.getShareFileDetails(email);
+		
+		}
+		else
+			
+		{
+			shareperc=null;
+			sharefiledetails= null;
+		
+		}
+		if(sharefiledetails != null){
+		for(int j=0;j<sharefiledetails.size();j++){
+			System.out.println("share name "+sharefiledetails.get(j).getUsername());
+			System.out.println("file name "+sharefiledetails.get(j).getFileName());
+		}
+		}
+		
+		session.setAttribute("history", sharefiledetails);
+		if(fileDetails != null){
+		for(int i=0; i<fileDetails.size();i++){
+			System.out.println("first object upload object "+fileDetails.get(i).getFileName());
+			
+		}}		
+		session.setAttribute("fileDetails", fileDetails);
+		//sharefiledetails = dbcon.getShareFileDetails(email);
+		System.out.println("total percentage "+dbcon.getTotalSize(email));
+		session.setAttribute("filePercentage", dbcon.getTotalSize(email));
+		return Response.status(200).entity("success").build();
+
+	}
+
+
 	@POST
 	@Path("/sharelink")
 	public Response shareEmail(@FormParam("shareemail") String shareemail, 

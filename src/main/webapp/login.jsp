@@ -44,11 +44,18 @@ function userLogin(){
 			url : "rest/file/login",
 		    type: "POST",
 		    data : "email=" + email + "&password=" + password,
-		   
-		    success:function(data, textStatus, jqXHR){
-		    	alert('success');
-		    	window.location.href="userPage.jsp";
-		    },
+		    	success:function(data, textStatus, jqXHR){
+			    	var uri = "rest/file/refresh";
+			    	$.ajax({
+			    		url : uri,
+			    	    type: "GET",
+			    	    datatype : "json",	     
+			    	    success:function(data, textStatus, jqXHR){
+			    		window.location.href="userPage.jsp";
+			    	    }
+			    	});
+			    	    
+			    },
 		    error: function(jqXHR, textStatus, errorThrown){
 		    	alert('Could not process request.. ' + errorThrown);
 		    	window.location.href="login.jsp";

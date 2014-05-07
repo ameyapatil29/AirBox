@@ -33,7 +33,7 @@ public boolean loginCheck(String username, String password){
         stmt.executeQuery(query);
         ResultSet rs = stmt.getResultSet();
         login = rs.first(); //rs.first();
-        
+        con.close();
     } catch (InstantiationException e) {
         e.printStackTrace();
     } catch (IllegalAccessException e) {
@@ -67,7 +67,7 @@ public String getBucketName (String username){
         }else
         	System.out.println("No user found for username = "+username+"  ");
         System.out.println("Inside DbConnection - testing bucket name: " +bname);
-       
+       con.close();
     } catch (InstantiationException e) {
         e.printStackTrace();
     } catch (IllegalAccessException e) {
@@ -121,7 +121,7 @@ public User getUserDetails (String uname){
         } else{
         	return null;
         }
-       
+        con.close();
        
     } catch (InstantiationException e) {
         e.printStackTrace();
@@ -214,14 +214,14 @@ public List<UploadObject> getFileDetails (String uname){
         		fileDetailObject = new UploadObject();
         		fileDetailObject.setUsername(username);
         		fileDetailObject.setFileName(filename);
-        		long convfileSize = filesize/1048576;
+        		long convfileSize = filesize;
         		fileDetailObject.setSize(convfileSize);
         		fileDetailObject.setDateCreated(date_created);
         		
         		fileDetailsList.add(fileDetailObject);
         	}
         
-        	
+        	con.close();
        
     } catch (InstantiationException e) {
         e.printStackTrace();
@@ -272,7 +272,7 @@ public List<UploadObject> getShareFileDetails (String username){
         		fileDetailsList.add(fileDetailObject);
         	}
               	
-        
+       con.close();
        
     } catch (InstantiationException e) {
         e.printStackTrace();
@@ -299,7 +299,7 @@ public String getTotalSize (String username){
         Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
 
-        query = "select * from (SELECT (sum(filesize)/1073741824) *100 as num FROM airbox.file_details where username='"+ username +"' UNION SELECT 1073741824 as num) t where t.num is not null limit 1";
+        query = "select * from (SELECT (sum(filesize)/1048576) *100 as num FROM airbox.file_details where username='"+ username +"' UNION SELECT 1048576 as num) t where t.num is not null limit 1";
 
        System.out.println("sharefile"); 
         ResultSet rs = stmt.executeQuery(query);
@@ -310,6 +310,7 @@ public String getTotalSize (String username){
         }
        
         System.out.println("The total size of bucket of username = "+username+" is" + totalSize  );
+        con.close();
        
     } catch (InstantiationException e) {
         e.printStackTrace();
@@ -340,6 +341,7 @@ public boolean shareCheck(String username){
         stmt.executeQuery(query);
         ResultSet rs = stmt.getResultSet();
         share = rs.first(); //rs.first();
+        con.close();
         
     } catch (InstantiationException e) {
         e.printStackTrace();
@@ -385,7 +387,7 @@ public List<UploadObject> getSharePerc (String username){
         		fileDetailsList.add(fileDetailObject);
         	}
         
-        	
+       con.close();
         
         
        
@@ -415,6 +417,7 @@ public void insertUser(User user){
         query = "INSERT into user_details (first_name, last_name, username, password, bucketname) values ('"+user.getFirstName()+"','"+user.getLastName()+"','"+user.getUserName()+"','"+user.getPassword()+"','"+user.getBucketname()+"')";
         stmt.executeUpdate(query);
         System.out.println("User Inserted successfully");
+        con.close();
     } catch (InstantiationException e) {
         e.printStackTrace();
     } catch (IllegalAccessException e) {
@@ -439,7 +442,7 @@ public boolean insertFiledata(UploadObject file, String username){
         Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
         
-        query1="SELECT * FROM (SELECT 1073741824-sum(filesize) as num FROM airbox.file_details WHERE username='"+ username +"' UNION SELECT 1073741824 as num) t where t.num is not null limit 1";
+        query1="SELECT * FROM (SELECT 1048576-sum(filesize) as num FROM airbox.file_details WHERE username='"+ username +"' UNION SELECT 1048576 as num) t where t.num is not null limit 1";
         
         query2 = "INSERT into file_details (username, filename, filesize, date_created) values ('"+username+"','"+file.getFileName()+"','"+filesize+"','"+dateFormat.format(date)+"')";
           
@@ -448,8 +451,9 @@ public boolean insertFiledata(UploadObject file, String username){
         while(rs.next()){
         allowedSize = Long.parseLong(rs.getString(1));
         System.out.println("allowedSize" + allowedSize);
+        
         }
-        if (file.getSize()< allowedSize)
+        if (filesize< allowedSize)
         {
         	stmt.executeUpdate(query2);
         	System.out.println("File Inserted");
@@ -458,6 +462,7 @@ public boolean insertFiledata(UploadObject file, String username){
         else
         {
         System.out.println("file can not be inserted");}
+        con.close();
         
     } catch (InstantiationException e) {
         e.printStackTrace();
@@ -486,6 +491,7 @@ public void shareFile(String username, String filename, String shareemail){
         query = "INSERT into share_details (ownername, shareuser, filename, shareddate) values ('"+uname+"','"+smail+"','"+fname+"','"+dateFormat.format(date)+"')";
         System.out.println("file inserted in db");
         stmt.executeUpdate(query);
+        con.close();
     } catch (InstantiationException e) {
         e.printStackTrace();
     } catch (IllegalAccessException e) {
@@ -504,6 +510,7 @@ public void deleteFile(String username, String filename){
         Statement stmt = (Statement) con.createStatement();
         query = "delete from file_details WHERE username='" + username + "' AND filename='" + filename + "'";
         stmt.executeUpdate(query);
+        con.close();
     } catch (InstantiationException e) {
         e.printStackTrace();
     } catch (IllegalAccessException e) {

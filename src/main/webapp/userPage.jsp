@@ -144,6 +144,21 @@ function EmailVerify() {
     return true;
 }
 
+function Refresh(){
+	var uri = "rest/file/refresh";
+	$.ajax({
+		url : uri,
+	    type: "GET",
+	    datatype : "json",	     
+	    success:function(data, textStatus, jqXHR){
+		window.location.href="userPage.jsp";
+	},
+	error: function(jqXHR, textStatus, errorThrown){
+		alert('Could not process request.. ' + errorThrown);
+	}
+	});
+	}
+
 
 function logout(){
 	
@@ -168,7 +183,7 @@ function logout(){
 
 function DeleteFiles(file){
 	
-	confirm('Are you sure you want to delete the file');
+	confirm('Are you sure you want to delete the file?');
 	var uri = "rest/file/delete/"+file;
 	$.ajax({
 		url : uri,
@@ -176,15 +191,25 @@ function DeleteFiles(file){
 	    datatype : "json",
 	   
 	    success:function(data, textStatus, jqXHR){
-	    	alert('success');
-	    	window.location.href="userPage.jsp";
+	    	var uri = "rest/file/refresh";
+	    	$.ajax({
+	    		url : uri,
+	    	    type: "GET",
+	    	    datatype : "json",	     
+	    	    success:function(data, textStatus, jqXHR){
+	    		window.location.href="userPage.jsp";
+	    	    }
+	    	});
+	    	    
 	    },
+	    
 	    error: function(jqXHR, textStatus, errorThrown){
 	    	//alert('Could not process request.. ' + errorThrown);
 	    }
 	});
 	
 }
+
 
 
 
@@ -251,7 +276,7 @@ function DeleteFiles(file){
 					<thead>
 						<tr>
 							<th>File Name</th>
-							<th>File Size (in Mb)</th>
+							<th>File Size</th>
 							<th>Date Modified</th>
 						</tr>
 					</thead>
@@ -260,7 +285,7 @@ function DeleteFiles(file){
 						<tr>
 							<td>${item.getFileName()}</td>
 							
-							<td>${item.getSize()}</td>
+							<td>${item.getSize()} KB</td>
 							
 							<td>${item.getDateCreated()}</td>
 						
@@ -275,7 +300,7 @@ function DeleteFiles(file){
 					</tbody>
 					 
 				</table>
-				<!--<button class="btn btn-primary" type="button">Download All</button> -->
+				<button class="btn btn-primary" type="button" onClick="Refresh();">Refresh</button> 
 
 
 			</div>
