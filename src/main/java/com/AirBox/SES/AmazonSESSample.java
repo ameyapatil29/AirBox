@@ -1,6 +1,9 @@
 package com.AirBox.SES;
 import java.io.IOException;
 
+
+
+
 //import com.AirBox.rest.MyConfig;
 import com.amazonaws.services.simpleemail.*;
 import com.amazonaws.services.simpleemail.model.*;
@@ -11,7 +14,7 @@ import com.amazonaws.regions.*;
 
 public class AmazonSESSample {
  
-    String FROM = "rohietkothari@gmail.com";  // Replace with your "From" address. This address must be verified.
+    String FROM = "ameypatil.be@gmail.com";  // Replace with your "From" address. This address must be verified.
     String TO = null; // Replace with a "To" address. If you have not yet requested
                                                       // production access, this address must be verified.
     String BODY = null;
@@ -24,13 +27,14 @@ public class AmazonSESSample {
     
     public void setConnec(ConcreteUserInfo userInfo, ConcreteMessage message){
     	
-    	AWSCredentials myCredentials = new BasicAWSCredentials(MyConfig.getMyAccessId(), MyConfig.getMySecretId());
+    	AWSCredentials myCredentials = new BasicAWSCredentials(MyConfig2.getMyAccessId(), MyConfig2.getMySecretId());
     	this.message = message;
     	this.userInfo = userInfo;
     	
-    	TO = this.userInfo.receiversEmail;
-    	BODY = this.message.msgBody;
-    	SUBJECT = this.message.msgSubject;
+    	
+    	TO = userInfo.receiversEmail;
+    	BODY = message.msgBody;
+    	SUBJECT = message.msgSubject;
     	
     	Destination destination = new Destination().withToAddresses(new String[]{TO});
     	Content subject = new Content().withData(SUBJECT);
@@ -46,10 +50,15 @@ public class AmazonSESSample {
         
             // Instantiate an Amazon SES client, which will make the service call with the supplied AWS credentials.
             AmazonSimpleEmailServiceClient client = new AmazonSimpleEmailServiceClient(myCredentials);
-               
+            
+            System.out.println("after connecting to ses client and before defining REGION variable as US_WEST_2");
     
-            Region REGION = Region.getRegion(Regions.US_WEST_2);
+            Region REGION = Region.getRegion(Regions.US_EAST_1);
+            
+            System.out.println("before setting the region");
             client.setRegion(REGION);
+            
+            System.out.println("before sending the email");
        
             // Send the email.
             client.sendEmail(request);  

@@ -1,7 +1,7 @@
 package com.AirBox.SES;
 
 
-public class MyConfig {
+public class MyConfig2 {
 	
 public static String myAccessId;
 public static String mySecretId;
