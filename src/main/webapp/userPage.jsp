@@ -103,7 +103,7 @@ function submitsharedata(){
 	var shareemail=  $('#shareemail').val();
 	
 	alert("file shared with "+shareemail+" is "+filetobeshared);
-	/*
+	
 	$.ajax({
 		url : "rest/file/sharelink",
 	    type: "POST",
@@ -117,7 +117,7 @@ function submitsharedata(){
 	    	alert('Could not process request.. ' + errorThrown);
 	    }
 	});
-	*/
+	
 	
 }
 

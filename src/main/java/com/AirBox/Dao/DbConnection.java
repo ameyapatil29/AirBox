@@ -119,7 +119,7 @@ public void shareFile(String username, String filename, String shareemail){
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
         Statement stmt = (Statement) con.createStatement();
-        query = "INSERT into share_details (owenername, shareuser, filename, date_created) values ('"+uname+"','"+smail+"','"+fname+"','"+dateFormat.format(date)+"')";
+        query = "INSERT into share_details (ownername, shareuser, filename, shareddate) values ('"+uname+"','"+smail+"','"+fname+"','"+dateFormat.format(date)+"')";
         System.out.println("file inserted in db");
         stmt.executeUpdate(query);
     } catch (InstantiationException e) {
