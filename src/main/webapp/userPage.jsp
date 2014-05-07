@@ -79,7 +79,11 @@ function Files(file){
 	   
 	    success:function(data, textStatus, jqXHR){
 	    	alert('success');
+	    	alert(data);
+	    	var link = data;
+	    	window.open(link);
 	    	window.location.href="userPage.jsp";
+	    	
 	    },
 	    error: function(jqXHR, textStatus, errorThrown){
 	    	alert('Could not process request.. ' + errorThrown);

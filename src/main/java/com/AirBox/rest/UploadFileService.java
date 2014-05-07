@@ -145,21 +145,23 @@ public class UploadFileService {
 	@GET
     @Path("/download/{objectKey}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response downloadOneObject(@PathParam("objectKey") String key,@Context HttpServletRequest req){
+    public Response downloadOneObject(@PathParam("objectKey") String key, @Context HttpServletRequest req){
     	
-    	String output="Files downloaded at location: C:/Users/Rohit/Desktop/AirBoxRepo/";
-    	String downloadLocation = "/Users/sumantmurke/Desktop/download/";
+    	/*String output="Files downloaded at location: C:/Users/Rohit/Desktop/AirBoxRepo/";
+    	String downloadLocation = "/Users/sumantmurke/Desktop/download/";*/
+		String username;
+		String bucketname;
     	AWSFacade awsFacade=new AWSFacade();
-    	
     	HttpSession session= req.getSession(true);
-		String username = (String) session.getAttribute("username");
-		DbConnection dbnewcon = new DbConnection();
-		String bucketname = dbnewcon.getBucketName(username);
+		username=(String) session.getAttribute("username");
+    	DbConnection dbnewcon = new DbConnection();
+		bucketname = dbnewcon.getBucketName(username);
+		String fileLink = awsFacade.getShareLink(bucketname,key);
 		
-    	output=awsFacade.downloadS3BucketObject(downloadLocation, key, bucketname);
-    	return Response.status(200).entity(output).build();
-    }  
-	
+    	//output=awsFacade.downloadS3BucketObject(downloadLocation, key);
+    	return Response.status(200).entity(fileLink).build();
+    } 
+
 	@DELETE
     @Path("/delete/{objectkey}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
