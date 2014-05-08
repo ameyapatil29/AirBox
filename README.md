@@ -21,6 +21,7 @@ How to use:
 
 Application URL: http://airbox.elasticbeanstalk.com/
 1.Register in Airbox and enjoy 1 GB free storage.
+
 2.Once you have registered you will get an email.
 3.Login into Airbox.
 4.Now you can upload, download or delete your files and also check the status of space available.
