@@ -25,7 +25,7 @@
 	media="screen" type="text/css">
 <link href="bootstrap/bootstrap-responsive.min.css" rel="stylesheet"
 	media="screen" type="text/css">
-
+<script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="omk40ywjmprdifx"></script>
 <script
     src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
 
@@ -70,7 +70,7 @@ function modal() {
 
 function Files(file){
 	
-	alert("i am inside download"+file);
+	//alert("i am inside download"+file);
 	var uri = "rest/file/download/"+file;
 	$.ajax({
 		url : uri,
@@ -79,7 +79,7 @@ function Files(file){
 	   
 	    success:function(data, textStatus, jqXHR){
 	    	alert('success');
-	    	alert(data);
+	    	//alert(data);
 	    	var link = data;
 	    	window.open(link);
 	    	window.location.href="userPage.jsp";
@@ -94,17 +94,17 @@ function Files(file){
 
 var testfile;
 function shareFiles(file){
-	alert('name of the file is '+file);
+	//alert('name of the file is '+file);
 	testfile = file;
 	
 	$("#shareModal").modal('show');
 }
 function submitsharedata(){
-	alert("name of the test file is "+testfile);
+	//alert("name of the test file is "+testfile);
 	var filetobeshared = testfile;
 	var shareemail=  $('#shareemail').val();
 	
-	alert("file shared with "+shareemail+" is "+filetobeshared);
+	//alert("file shared with "+shareemail+" is "+filetobeshared);
 	
 	$.ajax({
 		url : "rest/file/sharelink",
@@ -211,16 +211,28 @@ function DeleteFiles(file){
 }
 
 
-
-
-
-
-
-
 </script>
 
+<!-- Dropbox script -->
+<script type="text/javascript">
+  
+  $(document).ready(function() {
+	  var  dbChooser = $("#db-chooser");
+	  
+ 	 dbChooser.on("DbxChooserSuccess", function(e) { 
+		 //alert("Hello");
+	 	 //alert("Here's the chosen file: " + e.originalEvent.files[0].link);
+	 	$(dblink).append(" " + e.originalEvent.files[0].link);
+	 	$(dblink).attr("href", e.originalEvent.files[0].link);
+ 	
+	 		$("#myModal3").modal('show');
+	 		
+	 	
 
-
+	});
+  
+  });
+</script>
 
 </head>
 
@@ -244,9 +256,19 @@ function DeleteFiles(file){
 					</div>
 					<button class="btn btn-primary" type="button" onclick ="logout();" >Logout</button>
 					<button class="btn btn-primary" type="button" onclick="window.location.href='profile.jsp'" >Profile &raquo;</button>
+					
 				</div>
+				<div class="span3">
+				<div class="well sidebar-nav" style="width:266px; margin-left:-9px">
+					<input type="dropbox-chooser" name="selected-file" id="db-chooser" data-link-type="direct" />
+				<!-- 	
+					<a href="" id="dblink"></a>
+				 -->
+				</div>
+			</div>
 				<!--/.well -->
 			</div>
+			
 			<!--/span-->
 			<div class="span9">
 				<div class="well well-large">
@@ -308,8 +330,7 @@ function DeleteFiles(file){
 		</div>
 		<!--/row-->
 
-
-
+			
 	</div>
 	<!-- Modal for upload-->
 
@@ -374,8 +395,28 @@ function DeleteFiles(file){
 
 	</div>
 
+<!-- Modal for dropbox -->
 
 
+	<div id="myModal3" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Download your DropBox file here ..! </h4>
+				</div>
+				<div class="modal-body">
+
+						<a href="" id="dblink"></a>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+
+
+		</div>
+
+	</div>
 
 
 
